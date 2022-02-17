@@ -1,27 +1,40 @@
 const { Schema, model } = require("mongoose");
 
 // TODO: Please make sure you edit the user model to whatever makes sense in this case
-const userSchema = new Schema(
+const gameSchema = new Schema(
   {
-    username: {
+    name: {
       type: String,
       unique: true,
       trim: true,
       required: true,
       // unique: true -> Ideally, should be unique, but its up to you
     },
-    passwordhash: {
+    description: {
       type: String,
-      required: true
+      trim: true,
     },
-    email: {
+    numberOfPlayers: {
       type: String,
       required: true,
-      unique: true,
-      lowercase: true,
       trim: true,
-      match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address.'],
-    }
+    },
+    mechanics: {
+        type: [String],
+        default: undefined
+    },
+    age: {
+        type: Number,
+        trim: true,
+      },
+    playtime: {
+        type: String,
+        trim: true,
+    },
+    complexity: {
+        type: Number,
+        trim: true,
+      },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
@@ -29,6 +42,6 @@ const userSchema = new Schema(
   }
 );
 
-const User = model("User", userSchema);
+const Game = model("Game", gameSchema);
 
-module.exports = User;
+module.exports = Game;
