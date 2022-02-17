@@ -38,7 +38,7 @@ const userSchema = new Schema(
       trim: true,
       lowercase: true,
     },
-    gamesOwn: {
+    gamesOwned: {
       type: [String],
     },
     gamesWant: {
