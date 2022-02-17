@@ -5,6 +5,7 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
+      // I like working with Plipa
       // unique: true -> Ideally, should be unique, but its up to you
     },
     password: String,
