@@ -19,7 +19,7 @@ router.get("/signup", isLoggedOut, (req, res) => {
 });
 
 router.post("/auth/signup", isLoggedOut, (req, res) => {
-  const { username, password, email } = req.body;
+  const { username, password, email, age, location, discord } = req.body;
 
   if (!username) {
     return res
@@ -64,6 +64,9 @@ router.post("/auth/signup", isLoggedOut, (req, res) => {
           username,
           password: hashedPassword,
           email,
+          age, 
+          location,
+          discord
         });
       })
       .then((user) => {
@@ -119,7 +122,8 @@ router.post('/login', (req, res, next) => {
   });
 });
 
-router.get("/logout", isLoggedIn, (req, res) => {
+
+router.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       return res
@@ -137,7 +141,9 @@ router.get('/profile', (req, res, next) => {
 router.get('/recommendations', (req, res, next) => {
   res.render('auth/recommendations');
 });
-
+router.get('/connections', (req, res, next) => {
+  res.render('auth/connections');
+});
 
 
 

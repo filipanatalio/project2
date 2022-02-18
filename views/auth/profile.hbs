@@ -1,1 +1,25 @@
-<h1>Plipa</h1>
+{{!-- Profile page --}}
+
+<a href="/recommendations" class="btn btn-dark">Recommendations</a>
+<a href="/connections" class="btn btn-dark">Connections</a>
+<form action="/logout" method="POST">
+<button type="submit">Log Out</button>
+<h1>Profile</h1>
+
+{{#if user}}
+  <h3>Welcome, {{user.username}}! </h3>
+  <p>Age: {{user.age}}</p>
+  <p>Discord: {{user.discord}}</p>
+  <p>Location: {{user.location}}</p>
+  <p>Games that you want to play:</p>
+
+
+
+
+
+
+{{else}}
+
+  <p>You need to be logged in</p>
+
+{{/if}}
