@@ -18,6 +18,17 @@ const app = express();
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
 
+function getCurrentLoggedUser(req, res, next) {
+    if (req.session && req.session.currentUser) {
+      app.locals.loggedInUser = req.session.currentUser.username;
+    } else {
+      app.locals.loggedInUser = "";
+    }
+    next();
+  }
+  
+  app.use(getCurrentLoggedUser);
+
 const projectName = "Board Game Buddies";
 const capitalized = (string) => string[0].toUpperCase() + string.slice(1).toLowerCase();
 

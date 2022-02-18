@@ -106,17 +106,13 @@ router.post('/login', (req, res, next) => {
   }
 
   User.findOne({ email }).then((user) => {
-    console.log('user:', user)
     if (!user) {
-      console.log('there')
       res.render('auth/login', { errorMessage: 'Email not found.' });
       return;
     } else if (bcrypt.compareSync(password, user.password)) {
       req.session.currentUser = user;
-      console.log('req session', req.session);
       res.render('auth/profile', { user });
     } else {
-      console.log('here')
       res.render('auth/login', { errorMessage: 'Incorrect password' });
     }
   });
@@ -141,6 +137,7 @@ router.get('/profile', (req, res, next) => {
 router.get('/recommendations', (req, res, next) => {
   res.render('auth/recommendations');
 });
+
 router.get('/connections', (req, res, next) => {
   res.render('auth/connections');
 });

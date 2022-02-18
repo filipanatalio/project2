@@ -10,6 +10,17 @@
    </head>
 
    <body>
+      
+{{#if loggedInUser}}
+<a href="/profile" class="btn btn-dark">Profile</a>
+  <form action="/logout" method="POST">
+  <button type="submit">Log Out</button>
+  </form>
+{{else}}
+<a href="/login" class="btn btn-dark">Login</a>
+  <a href="/signup" class="btn btn-dark">Sign Up</a>
+{{/if}}
+  
 
       {{{body}}}
 
