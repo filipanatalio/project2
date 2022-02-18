@@ -10,7 +10,7 @@ const userSchema = new Schema(
       required: true,
       // unique: true -> Ideally, should be unique, but its up to you
     },
-    passwordhash: {
+    password: {
       type: String,
       required: true
     },
@@ -24,17 +24,14 @@ const userSchema = new Schema(
     },
     age: {
       type: Number,
-      required: true,
       trim: true,
     },
     location: {
       type: String,
-      required: true,
       trim: true,
     },
     discord: {
       type: String,
-      required: true,
       trim: true,
       lowercase: true,
     },
@@ -43,7 +40,6 @@ const userSchema = new Schema(
     },
     gamesWant: {
       type: [String],
-      required: true,
     },
   },
   {

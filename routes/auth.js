@@ -18,8 +18,8 @@ router.get("/signup", isLoggedOut, (req, res) => {
   res.render("auth/signup");
 });
 
-router.post("/signup", isLoggedOut, (req, res) => {
-  const { username, password } = req.body;
+router.post("/auth/signup", isLoggedOut, (req, res) => {
+  const { username, password, email } = req.body;
 
   if (!username) {
     return res
@@ -63,6 +63,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
         return User.create({
           username,
           password: hashedPassword,
+          email,
         });
       })
       .then((user) => {
