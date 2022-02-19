@@ -3,6 +3,8 @@ const router = require("express").Router();
 const {default: axios} = require("axios");
 
 /* GET home page */
+
+// Basis API connection, should be moved elsewhere
 router.get("/", async (req, res, next) => {
   try {
     const request = await axios.get(`https://api.boardgameatlas.com/api/search?name=C&limit=100&client_id=${process.env.CLIENT_ID}`);

@@ -10,10 +10,14 @@ const saltRounds = 10;
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
 
-// Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
+// Require the Game model in order to interact with the database
+const Game = require("../models/Game.model");
+
+// Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
+// Handles signup routes
 router.get("/signup", isLoggedOut, (req, res) => {
   res.render("auth/signup");
 });
@@ -93,17 +97,23 @@ router.post("/auth/signup", isLoggedOut, (req, res) => {
   });
 });
 
+// Handles login routes
 router.get('/login', (req, res, next) => {
   res.render('auth/login');
 });
 
+
 router.post('/login', (req, res, next) => {
   const { email, password } = req.body;
 
+  
+// Will check if user inputed email and password
   if (!email || !password) {
     res.render('auth/login', { errorMessage: 'Please provide both email and password' });
     return;
   }
+
+ // Uses email and uses it to find username, checks if password is correct 
 
   User.findOne({ email }).then((user) => {
     if (!user) {
@@ -111,14 +121,14 @@ router.post('/login', (req, res, next) => {
       return;
     } else if (bcrypt.compareSync(password, user.password)) {
       req.session.currentUser = user;
-      res.render('auth/profile', { user });
+      res.render('website/profile', { user });
     } else {
       res.render('auth/login', { errorMessage: 'Incorrect password' });
     }
   });
 });
 
-
+// Handles logout, redirects to index
 router.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -130,16 +140,20 @@ router.post("/logout", (req, res) => {
   });
 });
 
+
+// Handles profile routing, working partially
 router.get('/profile', (req, res, next) => {
-  res.render('auth/profile');
+  res.render('website/profile');
 });
 
+// Handles recommendations
 router.get('/recommendations', (req, res, next) => {
-  res.render('auth/recommendations');
+  res.render('website/recommendations');
 });
 
+// Handles connections
 router.get('/connections', (req, res, next) => {
-  res.render('auth/connections');
+  res.render('website/connections');
 });
 
 

@@ -9,9 +9,27 @@
       <link rel="stylesheet" href="/stylesheets/style.css" />
    </head>
 
+{{#if loggedInUser}}
+   <nav class="nav-bar"> 
+  <ul class="nav-bar-ul"> 
+   <li><a href="/recommendations">Recommendations</a></li>
+   <li><a href="/connections">Connections</a></li>
+   <li><a href="/profile">Profile</a></li>  
+   <li> <form action="/logout" method="POST"> <button type="submit">Log Out</button></form></li>
+  </ul>
+</nav>
+{{else}}
+   <nav class="nav-bar"> 
+  <ul class="nav-bar-ul"> 
+   <li><a href="/login">Login</a></li>  
+   <li><a href="/signup" class="btn btn-dark">Sign Up</a></li>
+  </ul>
+</nav>
+{{/if}}
+
    <body>
       
-{{#if loggedInUser}}
+{{!-- {{#if loggedInUser}}
 <a href="/profile" class="btn btn-dark">Profile</a>
   <form action="/logout" method="POST">
   <button type="submit">Log Out</button>
@@ -19,7 +37,7 @@
 {{else}}
 <a href="/login" class="btn btn-dark">Login</a>
   <a href="/signup" class="btn btn-dark">Sign Up</a>
-{{/if}}
+{{/if}} --}}
   
 
       {{{body}}}
