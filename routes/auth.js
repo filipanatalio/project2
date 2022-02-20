@@ -121,7 +121,8 @@ router.post('/login', (req, res, next) => {
       return;
     } else if (bcrypt.compareSync(password, user.password)) {
       req.session.currentUser = user;
-      res.render('website/profile', { user });
+      // res.render('website/profile', { user });
+      res.redirect('/profile');
     } else {
       res.render('auth/login', { errorMessage: 'Incorrect password' });
     }
@@ -143,7 +144,7 @@ router.post("/logout", (req, res) => {
 
 // Handles profile routing, working partially
 router.get('/profile', (req, res, next) => {
-  res.render('website/profile');
+  res.render('website/profile', { user : req.session.currentUser});
 });
 
 // Handles recommendations
