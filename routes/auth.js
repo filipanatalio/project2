@@ -152,32 +152,32 @@ router.get('/profile', (req, res, next) => {
 });
 
 // Handles recommendations
-router.get('/recommendations', (req, res, next) => {
+/* router.get('/recommendations', (req, res, next) => {
   res.render('website/recommendations');
-});
+}); */
 
 // Handles connections
 router.get('/connections', (req, res, next) => {
   res.render('website/connections');
 });
 
-// Handles connections
-router.get('/search', (req, res, next) => {
+
+// Handles recommendations and game search
+router.get('/recommendations', (req, res, next) => {
   console.log(req.query.game)
   if (!req.query.game) {
-    return res.render('website/search');
+    return res.render('website/recommendations');
   }
   else {
     axios
     .get(`https://api.boardgameatlas.com/api/search?name=${req.query.game}&limit=10&client_id=DDJV2RxbFt`)
     .then(response => {
-      console.log(response.data.games);
-      const gameDetail = response.data.games;    
-      return res.render('website/search', {gameDetail});
+      console.log(response.data.games[0]);
+      const gameDetail = response.data.games[0];    
+      return res.render('website/recommendations', {gameDetail});
 });
   }
 });
-
 
 
 

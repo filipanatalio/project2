@@ -6,7 +6,7 @@ document.addEventListener(
   false
 );
 
-const getGameInfo = gameName => {
+/* const getGameInfo = gameName => {
     axios
       .get(`https://api.boardgameatlas.com/api/search?name=${gameName}&limit=10&client_id=DDJV2RxbFt`)
       .then(response => {
@@ -30,6 +30,6 @@ const getGameInfo = gameName => {
 document.getElementById('get-game-btn').addEventListener('click', () => {
   const userInput = document.getElementById('game-name-input').value;
   getGameInfo(userInput);
-});
+}); */
 
 
