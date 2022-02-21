@@ -41,6 +41,9 @@ app.use("/", index);
 const authRoutes = require("./routes/auth");
 app.use("/", authRoutes);
 
+/* const webRoutes = require("./routes/website");
+app.use("/", webRoutes); */
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 

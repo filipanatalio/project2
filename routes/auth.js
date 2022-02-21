@@ -164,11 +164,8 @@ router.get('/connections', (req, res, next) => {
 
 // Handles recommendations and game search
 router.get('/recommendations', (req, res, next) => {
-  console.log(req.query.game)
-  console.log(req.query.minPlayer)
   let urlToSearch = "https://api.boardgameatlas.com/api/search?";
-  const additionalUrl = "";
-  if (!req.query.game && !req.query.maxPlayer && !req.query.minPlayer) {
+  if (!req.query.game && !req.query.maxPlayer && !req.query.minPlayer && !req.query.maxPlay && !req.query.minAge) {
     return res.render('website/recommendations');
   }
   if (req.query.game) {
@@ -179,6 +176,12 @@ router.get('/recommendations', (req, res, next) => {
   }
   if (req.query.maxPlayer) {
     urlToSearch = urlToSearch.concat(`&max_players=${req.query.maxPlayer}`)
+  }
+  if (req.query.minAge) {
+    urlToSearch = urlToSearch.concat(`&min_age=${req.query.minAge}`)
+  }
+  if (req.query.maxPlay) {
+    urlToSearch = urlToSearch.concat(`&max_playtime=${req.query.maxPlay}`)
   }
   urlToSearch = urlToSearch.concat(`&limit=${req.query.searchNumber}&client_id=DDJV2RxbFt`)
   axios
@@ -210,6 +213,16 @@ router.get('/recommendations', (req, res, next) => {
   } */
 });
 
+router.post('/recommendations/random', (req, res, next) => {
+  axios
+    .get(`https://api.boardgameatlas.com/api/search?random=true&client_id=DDJV2RxbFt`)
+    .then(response => {
+      console.log(response.data.games[0]);
+      const gameDetail = response.data.games;    
+      return res.render('website/recommendations', {gameDetail});
+    });
+});
+
 router.post('/recommendation/add-wanted/:id', (req, res, next) => {
   const gameId = req.params.id
   const currentUser = req.session.currentUser
@@ -225,7 +238,7 @@ router.post('/recommendation/add-wanted/:id', (req, res, next) => {
     })
     .catch((err) =>
       console.log(
-        'Error while adding a coffee to the favorites list: ',
+        'Error while adding game to the favorites list: ',
         err
       )
     );

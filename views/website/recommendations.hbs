@@ -10,9 +10,16 @@
                   <input id="search" name="minPlayer" type="number" class="input" placeholder="search..."/>
                   <label for="search">Maximum players:</label>
                   <input id="search" name="maxPlayer" type="number" class="input" placeholder="search..."/>
+                  <label for="search">Minimum age:</label>
+                  <input id="search" name="minAge" type="number" class="input" placeholder="search..."/>
+                  <label for="search">Maximum playtime:</label>
+                  <input id="search" name="maxPlay" type="number" class="input" placeholder="search..."/>
                   <label for="searchNumber">Max results:</label>
                   <input id="searchNumber" name="searchNumber" value="10" type="number"/>
                   <button id="search" class="search-results">search</button>
+              </form>
+              <form class="form" method="post" action="/recommendations/random">
+              <button id="search" class="search-results">Random game!</button>
               </form>
 </div>
 {{!--     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -27,10 +34,13 @@
   <p>Minimum recommended age: {{min_age}}</p>
   <p>Average playtime: {{min_playtime}} to {{max_playtime}} minutes</p>
 {{!--   <p>Complexity: (({{average_learning_complexity}}+{{average_strategy_complexity}})/2) / 5</p> --}}
+  {{#if rules_url}}
   <p><a href="{{rules_url}}">Link to rules summary</a></p>
+  {{/if}}
   <img class="box-art" src="{{thumb_url}}" alt="Box art">
+  <p><a href="{{url}}">Buy this game</a></p>
   <p>Unique id: {{id}}</p>
-  <p>Description:  {{description_preview}}</p>
+  <p>{{description_preview}}</p>
 
 <form action="/recommendation/add-wanted/{{id}}" method="POST" >
 
