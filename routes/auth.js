@@ -165,12 +165,32 @@ router.get('/connections', (req, res, next) => {
 // Handles recommendations and game search
 router.get('/recommendations', (req, res, next) => {
   console.log(req.query.game)
-  console.log(req.query.minPlay)
-  const text1 = "https://api.boardgameatlas.com/api/search?";
+  console.log(req.query.minPlayer)
+  let urlToSearch = "https://api.boardgameatlas.com/api/search?";
+  const additionalUrl = "";
   if (!req.query.game && !req.query.maxPlayer && !req.query.minPlayer) {
     return res.render('website/recommendations');
   }
-  else if (req.query.game) {
+  if (req.query.game) {
+    urlToSearch = urlToSearch.concat(`&name=${req.query.game}`)
+  }
+  if (req.query.minPlayer) {
+    urlToSearch = urlToSearch.concat(`&min_players=${req.query.minPlayer}`)
+  }
+  if (req.query.maxPlayer) {
+    urlToSearch = urlToSearch.concat(`&max_players=${req.query.maxPlayer}`)
+  }
+  urlToSearch = urlToSearch.concat(`&limit=${req.query.searchNumber}&client_id=DDJV2RxbFt`)
+  axios
+  .get(urlToSearch)
+  .then(response => {
+    console.log(response.data.games[0]);
+    const gameDetail = response.data.games;    
+    return res.render('website/recommendations', {gameDetail});
+  });
+
+
+/*   else if (req.query.game) {
     axios
     .get(`https://api.boardgameatlas.com/api/search?name=${req.query.game}&limit=${req.query.searchNumber}&client_id=DDJV2RxbFt`)
     .then(response => {
@@ -187,7 +207,7 @@ router.get('/recommendations', (req, res, next) => {
       const gameDetail = response.data.games;    
       return res.render('website/recommendations', {gameDetail});
 });
-  }
+  } */
 });
 
 router.post('/recommendation/add-wanted/:id', (req, res, next) => {
