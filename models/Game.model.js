@@ -7,7 +7,6 @@ const gameSchema = new Schema(
       type: String,
       unique: true,
       trim: true,
-      required: true,
       // unique: true -> Ideally, should be unique, but its up to you
     },
     description: {
@@ -16,7 +15,6 @@ const gameSchema = new Schema(
     },
     numberOfPlayers: {
       type: String,
-      required: true,
       trim: true,
     },
     mechanics: {
@@ -35,6 +33,9 @@ const gameSchema = new Schema(
         type: Number,
         trim: true,
       },
+    id: {
+      type: String,
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

@@ -179,6 +179,35 @@ router.get('/recommendations', (req, res, next) => {
   }
 });
 
+router.post('/recommendation/add-wanted/:id', (req, res, next) => {
+  const gameId = req.params.id
+  const currentUser = req.session.currentUser
+
+
+  User.findByIdAndUpdate(
+    currentUser._id,
+    { $push: { gamesWant: gameId } },
+    { new: true }
+  )
+    .then((updatedUser) => {
+      res.redirect('/profile');
+    })
+    .catch((err) =>
+      console.log(
+        'Error while adding a coffee to the favorites list: ',
+        err
+      )
+    );
+
+  // Game.create({
+  //      name: req.query.name,
+  //      id: req.query.id
+  //    })
+  // .then( newGame => {
+  //   console.log("New game: ", newGame);
+  // } )
+  // .catch(err => console.log('Err while creating new game: ', err));
+});
 
 
 

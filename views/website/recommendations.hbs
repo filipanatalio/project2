@@ -1,7 +1,4 @@
-    <h1>Search for games</h1>
-
-
-
+<h1>Search for games</h1>
  
 {{#if loggedInUser}}
 
@@ -15,14 +12,7 @@
 {{!--     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
  --}}
 {{#if gameDetail}}
-{{!--  document.getElementById('game-name').innerText = `Name: ${gameDetail[0].name}`;
-      document.getElementById('game-minplayer').innerText = `Min/Max players: ${gameDetail[0].min_players}/${gameDetail[0].max_players}`;
-      document.getElementById('game-minage').innerText = `Min age: ${gameDetail[0].min_age}`;
-      document.getElementById('game-playtime').innerText = `Playtime: ${gameDetail[0].min_playtime}/${gameDetail[0].max_playtime} minutes`;
-      document.getElementById('game-box').setAttribute('src', gameDetail[0].thumb_url);
-      document.getElementById('game-rules').innerText = `Rules: ${gameDetail[0].rules_url}`;
-      document.getElementById('game-description').innerText = gameDetail[0].description;
- --}}
+
 <div class="boxes-games">
  {{#each gameDetail}}
 <div class="box-game">
@@ -30,10 +20,17 @@
   <p>Players: {{min_players}} to {{max_players}}</p>
   <p>Minimum recommended age: {{min_age}}</p>
   <p>Average playtime: {{min_playtime}} to {{max_playtime}} minutes</p>
+{{!--   <p>Complexity: (({{average_learning_complexity}}+{{average_strategy_complexity}})/2) / 5</p> --}}
   <p><a href="{{rules_url}}">Link to rules summary</a></p>
   <img class="box-art" src="{{thumb_url}}" alt="Box art">
-  <p>Description:</p>
-  {{description}}
+  <p>Unique id: {{id}}</p>
+  <p>Description:  {{description_preview:}}</p>
+
+<form action="/recommendation/add-wanted/{{id}}" method="POST" >
+
+  <button type="submit">Add game to list</button>
+</form>
+
   </div>
   {{/each}}
   </div>
