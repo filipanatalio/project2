@@ -173,12 +173,11 @@ router.get('/recommendations', (req, res, next) => {
     .get(`https://api.boardgameatlas.com/api/search?name=${req.query.game}&limit=10&client_id=DDJV2RxbFt`)
     .then(response => {
       console.log(response.data.games[0]);
-      const gameDetail = response.data.games[0];    
+      const gameDetail = response.data.games;    
       return res.render('website/recommendations', {gameDetail});
 });
   }
 });
-
 
 
 

@@ -1,32 +1,19 @@
     <h1>Search for games</h1>
 
+
+
+ 
+{{#if loggedInUser}}
+
 <div class="form-container">
               <form class="form" method="get" action="/recommendations">
                   <input id="search" name="game" type="text" class="input" placeholder="search..."/>
                   <button id="search" class="search-results">search</button>
-                  <button id="clear" class="clear-results">clear</button>
               </form>
 
 </div>
-
- 
-    <div>
-      <input id="game-name-input" type="text" />
-      <button id="get-game-btn">Find Game</button>
-    </div>
- 
-    <h2 id="game-name"></h2>
-    <p id="game-minplayer"></p>
-    <p id="game-minage"></p>
-    <p id="game-playtime"></p>
-    <div>
-      <img id="game-box" src="" height="200px" />
-    </div>
-    <p id="game-rules"></p>
-    <p id="game-description"></p>
- 
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
+{{!--     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+ --}}
 {{#if gameDetail}}
 {{!--  document.getElementById('game-name').innerText = `Name: ${gameDetail[0].name}`;
       document.getElementById('game-minplayer').innerText = `Min/Max players: ${gameDetail[0].min_players}/${gameDetail[0].max_players}`;
@@ -36,27 +23,26 @@
       document.getElementById('game-rules').innerText = `Rules: ${gameDetail[0].rules_url}`;
       document.getElementById('game-description').innerText = gameDetail[0].description;
  --}}
+<div class="boxes-games">
+ {{#each gameDetail}}
 <div class="box-game">
-<h3>{{gameDetail.name}}</h3>
-  <p>Players: {{gameDetail.min_players}} to {{gameDetail.max_players}}</p>
-  <p>Minimum recommended age: {{gameDetail.min_age}}</p>
-  <p>Average playtime: {{gameDetail.min_playtime}} to {{gameDetail.max_playtime}} minutes</p>
-  <p><a href="{{gameDetail.rules_url}}">Link to rules summary</a></p>
-  <img class="box-art" src="{{gameDetail.thumb_url}}" alt="Box art">
+<h3>{{name}}</h3>
+  <p>Players: {{min_players}} to {{max_players}}</p>
+  <p>Minimum recommended age: {{min_age}}</p>
+  <p>Average playtime: {{min_playtime}} to {{max_playtime}} minutes</p>
+  <p><a href="{{rules_url}}">Link to rules summary</a></p>
+  <img class="box-art" src="{{thumb_url}}" alt="Box art">
   <p>Description:</p>
-  {{gameDetail.description}}
+  {{description}}
   </div>
-{{else}}
- <p>You need to be logged in 2</p>
+  {{/each}}
+  </div>
 {{/if}}
-
-
-{{#if user}}
-
-
 
 {{else}}
 
   <p>You need to be logged in</p>
 
 {{/if}}
+
+
