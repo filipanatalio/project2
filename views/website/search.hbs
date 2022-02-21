@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>API TEST</title>
+  </head>
+ 
+  <body>
+    <h1>Search for games</h1>
+
+<div class="form-container">
+              <form class="form" method="get" action="/search">
+                  <input id="search" name="game" type="text" class="input" placeholder="search..."/>
+                  <button id="search" class="search-results">search</button>
+                  <button id="clear" class="clear-results">clear</button>
+              </form>
+
+</div>
+
+ 
+    <div>
+      <input id="game-name-input" type="text" />
+      <button id="get-game-btn">Find Game</button>
+    </div>
+ 
+    <h2 id="game-name"></h2>
+    <p id="game-minplayer"></p>
+    <p id="game-minage"></p>
+    <p id="game-playtime"></p>
+    <div>
+      <img id="game-box" src="" height="200px" />
+    </div>
+    <p id="game-rules"></p>
+    <p id="game-description"></p>
+ 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </body>
+</html>

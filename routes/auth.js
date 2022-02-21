@@ -17,6 +17,10 @@ const Game = require("../models/Game.model");
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
+//axios
+const axios = require("axios");
+
+
 // Handles signup routes
 router.get("/signup", isLoggedOut, (req, res) => {
   res.render("auth/signup");
@@ -156,6 +160,26 @@ router.get('/recommendations', (req, res, next) => {
 router.get('/connections', (req, res, next) => {
   res.render('website/connections');
 });
+
+// Handles connections
+router.get('/search', (req, res, next) => {
+  console.log(req.query.game)
+  if (!req.query.game) {
+    return res.render('website/search');
+  }
+  else {
+    axios
+    .get(`https://api.boardgameatlas.com/api/search?name=${req.query.game}&limit=10&client_id=DDJV2RxbFt`)
+    .then(response => {
+      console.log(response.data.games);
+      const gameDetail = response.data.games;    
+      return res.render('website/search', {gameDetail});
+});
+  }
+});
+
+
+
 
 
 
