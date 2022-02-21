@@ -165,12 +165,23 @@ router.get('/connections', (req, res, next) => {
 // Handles recommendations and game search
 router.get('/recommendations', (req, res, next) => {
   console.log(req.query.game)
-  if (!req.query.game) {
+  console.log(req.query.minPlay)
+  const text1 = "https://api.boardgameatlas.com/api/search?";
+  if (!req.query.game && !req.query.maxPlayer && !req.query.minPlayer) {
     return res.render('website/recommendations');
   }
-  else {
+  else if (req.query.game) {
     axios
-    .get(`https://api.boardgameatlas.com/api/search?name=${req.query.game}&limit=10&client_id=DDJV2RxbFt`)
+    .get(`https://api.boardgameatlas.com/api/search?name=${req.query.game}&limit=${req.query.searchNumber}&client_id=DDJV2RxbFt`)
+    .then(response => {
+      console.log(response.data.games[0]);
+      const gameDetail = response.data.games;    
+      return res.render('website/recommendations', {gameDetail});
+});
+  }
+  else if (req.query.maxPlayer) {
+    axios
+    .get(`https://api.boardgameatlas.com/api/search?min_players=${req.query.minPlayer}&max_players=${req.query.maxPlayer}&limit=${req.query.searchNumber}&client_id=DDJV2RxbFt`)
     .then(response => {
       console.log(response.data.games[0]);
       const gameDetail = response.data.games;    
