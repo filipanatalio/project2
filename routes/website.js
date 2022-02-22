@@ -151,8 +151,8 @@ router.get('/profile', (req, res, next) => {
       .get(`https://api.boardgameatlas.com/api/search?random=true&client_id=DDJV2RxbFt`)
       .then(response => {
         console.log(response.data.games[0]);
-        const gameDetail = response.data.games;    
-        return res.render('website/recommendations', {gameDetail});
+        const axiosGames = response.data.games;    
+        return res.render('website/recommendations', {axiosGames});
       });
   });
   

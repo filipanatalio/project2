@@ -54,13 +54,13 @@
 </div>
 {{!--     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
  --}}
+ <div class="boxes-games">
 {{#if mongoGames}}
 
-  <div class="boxes-games">
     {{#each mongoGames}}
       <div class="box-game">
         <h3>{{name}}</h3>
-        <p>Players: {{minPlayer}} to {{max_player}}</p>
+        <p>Players: {{minPlayer}} to {{maxPlayer}}</p>
         <p>Minimum recommended age: {{minAge}}</p>
         <p>Average playtime: Up to {{maxPlay}} minutes</p>
           {{#if rulesUrl}}
@@ -73,19 +73,15 @@
         </div>
 
         <form action="/recommendation/add-wanted/{{id}}" method="POST" >
-          <input type="gamesOwned" id="gamesOwned" name="gamesOwned" value="gamesOwned">
-          <label for="gamesOwned">Check if you own the game</label>
           <button type="submit">Add game to list</button>
         </form>
       </div>
     
     {{/each}}
-  </div>
 {{/if}}
 
 {{#if axiosGames}}
 
-<div class="boxes-games">
  {{#each axiosGames}}
 <div class="box-game">
 <h3>{{name}}</h3>
@@ -105,8 +101,6 @@
 
 
 <form action="/recommendation/add-wanted/{{id}}" method="POST" >
-  <input type="gamesOwned" id="gamesOwned" name="gamesOwned" value="gamesOwned">
-  <label for="gamesOwned">Check if you own the game</label>
   <button type="submit">Add game to list</button>
 </form>
 
