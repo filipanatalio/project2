@@ -36,9 +36,9 @@ const gameSchema = new Schema(
         type: Number,
         trim: true,
     },
-    id: {
+/*     id: {
       type: String,
-    },
+    }, */
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

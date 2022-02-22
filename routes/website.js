@@ -145,15 +145,6 @@ router.get('/profile', (req, res, next) => {
     const gameId = req.params.id
     const currentUser = req.session.currentUser
 
-/*     User.findOne({ username }).then((found) => {
-        // If the user is found, send the message username is taken
-        if (found) {
-          return res
-            .status(400)
-            .render("auth.signup", { errorMessage: "Username already taken." });
-        } */
-  
-  
     User.findByIdAndUpdate(
       currentUser._id,
       { $push: { gamesWant: gameId } },
@@ -168,24 +159,38 @@ router.get('/profile', (req, res, next) => {
           err
         )
       );
-  
-    // Game.create({
-    //      name: req.query.name,
-    //      id: req.query.id
-    //    })
-    // .then( newGame => {
-    //   console.log("New game: ", newGame);
-    // } )
-    // .catch(err => console.log('Err while creating new game: ', err));
+
   });
+
+  // router.post('/recommendations/add-game', (req, res, next) => {
+  //   const { name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay } = req.body;
+  //   const currentUser = req.session.currentUser
+
+  //   Game.create({ name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay })
+  //   .then( newGame => {
+  //       console.log("New game created: ", newGame);
+  //       res.redirect('/recommendations');
+  //   })
+  //   .catch(err => console.log('Err while creating new game: ', err));
+
+  // });
 
   router.post('/recommendations/add-game', (req, res, next) => {
     const { name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay } = req.body;
+    const currentUser = req.session.currentUser
 
     Game.create({ name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay })
     .then( newGame => {
-        console.log("New game: ", newGame);
-        res.redirect('/recommendations');
+        console.log("New game created: ", newGame);
+        return User.findByIdAndUpdate(
+            currentUser._id,
+            { $push: { gamesWant: newGame._id } },
+            { new: true }
+          )
+    })
+    .then(updatedUser => {
+      console.log(updatedUser)
+      res.redirect('/recommendations');
     })
     .catch(err => console.log('Err while creating new game: ', err));
 
