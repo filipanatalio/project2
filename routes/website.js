@@ -32,8 +32,51 @@ router.get('/profile', (req, res, next) => {
   
   // Handles connections
   router.get('/connections', (req, res, next) => {
-    res.render('website/connections');
-  });
+
+    const username = req.session.currentUser.username;
+    let gamesWant = []; 
+    let gamesMatch = [];
+    //Finding the data of the logged user
+    User.findOne({ username }).then((logedUser) => {
+  
+    // Search the games that the logged user wants to play
+      if (logedUser) {
+      gamesWant = logedUser.gamesWant;
+    }
+    
+    }).then(response1 => {
+  
+    // Acessing all users
+    User.find({ }).then((allUsers) => {
+      
+      if (allUsers) {
+            allUsers.forEach(user => {
+          
+          if (username !== user.username){
+              // Matching the logged in user with other users want to play games 
+              user.gamesWant.forEach(game => {
+          
+                // Finding matching games 
+                      if(gamesWant.indexOf(game) !== -1 ){
+                          if(!gamesMatch.find(element => element.username === user.username)){             
+                          gamesMatch.push(user)
+                        }
+                      }
+                    }) 
+          } 
+              
+          //  console.log(gamesMatch)
+        })
+      //  console.log(gamesMatch)
+      }
+      
+    }).then(response => {
+      // console.log(response)
+      return res.render('website/connections', {gamesMatch});
+    })
+    })
+  
+    });
   
   
   // Handles recommendations and game search

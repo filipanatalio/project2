@@ -1,10 +1,15 @@
-{{#if user}}
-<h1>{{user.username}} Connections</h1>
+{{#if loggedInUser}}
+  <h1>Connections</h1>
 
-<h2>If you had any friends, they would show up here</h2>
+<div class="connetions">
 
+  {{#each gamesMatch}}
+  <p>Name: {{username}} </p>
+  <button id="addFriend" class="addFriend" onclick="addFriend()">Add</button>
+  {{/each}}
 
-
+ 
+</div>
 
 
 
@@ -16,3 +21,9 @@
   <p>You need to be logged in</p>
 
 {{/if}}
+<script type="text/x-handlebars-template" id="myTempId">
+    function addFriend() {
+    alert("lol")
+
+  }
+</script>
