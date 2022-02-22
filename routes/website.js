@@ -80,7 +80,8 @@ router.get('/profile', (req, res, next) => {
   
   
   // Handles recommendations and game search
-  router.get('/recommendations', (req, res, next) => {
+  router.get('/recommendations', async (req, res, next) => {
+
     let urlToSearch = "https://api.boardgameatlas.com/api/search?";
     if (!req.query.game && !req.query.maxPlayer && !req.query.minPlayer && !req.query.maxPlay && !req.query.minAge) {
       return res.render('website/recommendations');
@@ -102,13 +103,27 @@ router.get('/profile', (req, res, next) => {
       urlToSearch = urlToSearch.concat(`&max_playtime=${req.query.maxPlay}`)
     }
     urlToSearch = urlToSearch.concat(`&limit=${req.query.searchNumber}&client_id=DDJV2RxbFt`)
-    axios
+
+    const axiosResponse = await axios.get(urlToSearch)
+    const mongoResponse =  await Game.find();
+    
+    const axiosGames = axiosResponse.data.games;
+    const mongoGames = mongoResponse.filter((element) => {
+        return element.name === req.query.game;
+    })
+
+    console.log(mongoGames);
+
+    res.render("website/recommendations", {axiosGames, mongoGames})
+
+
+    /* axios
     .get(urlToSearch)
     .then(response => {
       console.log(response.data.games[0]);
       const gameDetail = response.data.games;    
       return res.render('website/recommendations', {gameDetail});
-    });
+    }); */
   
   
   /*   else if (req.query.game) {
@@ -176,10 +191,10 @@ router.get('/profile', (req, res, next) => {
   // });
 
   router.post('/recommendations/add-game', (req, res, next) => {
-    const { name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay } = req.body;
+    const { name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay, thumb_url } = req.body;
     const currentUser = req.session.currentUser
 
-    Game.create({ name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay })
+    Game.create({ name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay, thumb_url })
     .then( newGame => {
         console.log("New game created: ", newGame);
         return User.findByIdAndUpdate(

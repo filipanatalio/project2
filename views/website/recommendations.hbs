@@ -42,7 +42,9 @@
                   <label for="minAge">Minimum age:</label>
                   <input id="minAge" name="minAge" type="number" class="input" placeholder="required" required/>
                   <label for="maxPlay">Maximum playtime:</label>
-                  <input id="maxPlay" name="maxPlay" type="number" class="input" placeholder="maximum estimated time of matches"/>
+                  <input id="maxPlay" name="maxPlay" type="number" class="input" placeholder="max playtime"/>
+                  <label for="thumb_url">Box art:</label>
+                  <input id="thumb_url" name="thumb_url" type="text" class="input" placeholder="image URL here"/>
                   <label for="description">Description:</label>
                   <input id="description" name="description" type="text" class="input" placeholder="Brief description of the game"/>
                   <label for="rulesUrl">Link to rules:</label>
@@ -52,10 +54,39 @@
 </div>
 {{!--     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
  --}}
-{{#if gameDetail}}
+{{#if mongoGames}}
+
+  <div class="boxes-games">
+    {{#each mongoGames}}
+      <div class="box-game">
+        <h3>{{name}}</h3>
+        <p>Players: {{minPlayer}} to {{max_player}}</p>
+        <p>Minimum recommended age: {{minAge}}</p>
+        <p>Average playtime: Up to {{maxPlay}} minutes</p>
+          {{#if rulesUrl}}
+            <p><a href="{{rulesUrl}}">Link to rules summary</a></p>
+          {{/if}}
+        <img class="box-art" src="{{thumb_url}}" alt="Box art">
+        <p>Unique id: {{id}}</p>
+        <div style="overflow: auto scroll; max-height:20vh;">
+          <p>{{description}}</p>
+        </div>
+
+        <form action="/recommendation/add-wanted/{{id}}" method="POST" >
+          <input type="gamesOwned" id="gamesOwned" name="gamesOwned" value="gamesOwned">
+          <label for="gamesOwned">Check if you own the game</label>
+          <button type="submit">Add game to list</button>
+        </form>
+      </div>
+    
+    {{/each}}
+  </div>
+{{/if}}
+
+{{#if axiosGames}}
 
 <div class="boxes-games">
- {{#each gameDetail}}
+ {{#each axiosGames}}
 <div class="box-game">
 <h3>{{name}}</h3>
   <p>Players: {{min_players}} to {{max_players}}</p>
@@ -74,7 +105,8 @@
 
 
 <form action="/recommendation/add-wanted/{{id}}" method="POST" >
-
+  <input type="gamesOwned" id="gamesOwned" name="gamesOwned" value="gamesOwned">
+  <label for="gamesOwned">Check if you own the game</label>
   <button type="submit">Add game to list</button>
 </form>
 
@@ -83,10 +115,8 @@
   </div>
 {{/if}}
 
-{{else}}
+{{!-- {{else}}
 
   <p>You need to be logged in</p>
-
+ --}}
 {{/if}}
-
-

@@ -24,18 +24,22 @@ const gameSchema = new Schema(
       required: true,
     },
     rulesUrl: {
-        type: String,
-        default: undefined,
+      type: String,
+      default: undefined,
     },
     minAge: {
-        type: Number,
-        trim: true,
-        required: true,
+      type: Number,
+      trim: true,
+      required: true,
       },
     maxPlay: {
-        type: Number,
-        trim: true,
+      type: Number,
+      trim: true,
     },
+    thumb_url: {
+      type: String,
+      trim: true,
+    }
 /*     id: {
       type: String,
     }, */
