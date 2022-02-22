@@ -18,77 +18,140 @@ const isLoggedIn = require("../middleware/isLoggedIn")
 const axios = require("axios");
 
 // Handles profile routing, working partially
-router.get('/profile', (req, res, next) => {
-    const username = req.session.currentUser.username;
-    let gamesWant = [];
+// router.get('/profile', (req, res, next) => {
+//     const username = req.session.currentUser.username;
+//     let gamesWant = [];
 
-    User.findOne({ username }).then((logedUser) => {  
-          if (logedUser) {
-          gamesWant = logedUser.gamesWant;
-        }
-        console.log(gamesWant);
-        console.log(logedUser);
-    })
-
-
-
-
-    res.render('website/profile', { user : req.session.currentUser});
+//     User.findOne({ username }).then((logedUser) => {  
+//           if (logedUser) {
+//           gamesWant = logedUser.gamesWant;
+//         }
+//         console.log(gamesWant);
+//         console.log(logedUser);
+//     })
+//     res.render('website/profile', { user : req.session.currentUser});
+// });
+router.get("/profile", (req, res, next) => {
+  const user = req.session.currentUser;
+  //console.log(user)
+  User.findById(user._id)
+    .populate("followings")
+    .then((theUser) => {
+      res.render("website/profile", { user: theUser });
+    });
 });
-  
   // Handles recommendations
   /* router.get('/recommendations', (req, res, next) => {
     res.render('website/recommendations');
   }); */
   
-  // Handles connections
-router.get('/connections', (req, res, next) => {
 
-    const username = req.session.currentUser.username;
-    let gamesWant = []; 
-    let gamesMatch = [];
-    //Finding the data of the logged user
-    User.findOne({ username }).then((logedUser) => {
-  
-    // Search the games that the logged user wants to play
+// Handles connections
+router.get("/connections", async (req, res, next) => {
+  const username = req.session.currentUser.username;
+  let myUserFollowings = [];
+  console.log(myUserFollowings);
+  let gamesWant = [];
+  let gamesMatch = [];
+  //Finding the data of the logged user
+  User.findOne({ username })
+    .then((logedUser) => {
+      // Search the games that the logged user wants to play
       if (logedUser) {
-      gamesWant = logedUser.gamesWant;
-    }
-    
-    }).then(response1 => {
-  
-    // Acessing all users
-    User.find({ }).then((allUsers) => {
-      
-      if (allUsers) {
-            allUsers.forEach(user => {
-          
-          if (username !== user.username){
-              // Matching the logged in user with other users want to play games 
-              user.gamesWant.forEach(game => {
-          
-                // Finding matching games 
-                      if(gamesWant.indexOf(game) !== -1 ){
-                          if(!gamesMatch.find(element => element.username === user.username)){             
-                          gamesMatch.push(user)
-                        }
-                      }
-                    }) 
-          } 
-              
-          //  console.log(gamesMatch)
-        })
-      //  console.log(gamesMatch)
+        gamesWant = logedUser.gamesWant;
+        myUserFollowings = logedUser.followings;
       }
-      
-    }).then(response => {
-      // console.log(response)
-      return res.render('website/connections', {gamesMatch});
     })
-    })
-  
+    .then((response1) => {
+      // Acessing all users
+      User.find()
+        .then((allUsers) => {
+          if (allUsers) {
+            allUsers.forEach((user) => {
+              const toNumber = user._id.valueOf();
+              console.log(toNumber);
+
+              if (
+                username !== user.username &&
+                !myUserFollowings.includes(toNumber)
+              ) {
+                // Matching the logged in user with other users want to play games
+                user.gamesWant.forEach((game) => {
+                  // Finding matching games
+                  if (gamesWant.indexOf(game) !== -1) {
+                    if (
+                      !gamesMatch.find(
+                        (element) => element.username === user.username
+                      )
+                    ) {
+                      //console.log(!myUserFollowings.includes(user._id));
+
+                      if (!myUserFollowings.includes(user._id)) {
+                        gamesMatch.push(user);
+                      }
+                    }
+                  }
+                });
+              }
+
+              //  console.log(gamesMatch)
+            });
+
+            // console.log("gamesMatch", gamesMatch)
+          }
+        })
+        .then((response) => {
+          // console.log(response)
+          // console.log("gamesMatch", gamesMatch)
+          return res.render("website/connections", { gamesMatch });
+        });
+    });
 });
-  
+
+//Add new friend to our database and prints in the profile page
+router.post("/connections/add/:id", (req, res, next) => {
+  const newFriend = req.params.id;
+  const user = req.session.currentUser._id;
+
+  User.findById(user).then((currentUser) => {
+    const currentFriends = currentUser.followings;
+
+    if (currentFriends.includes(newFriend)) {
+      console.log("amigo ja existente");
+      return false;
+    } else {
+      console.log("amigo adicionado");
+
+      return User.findByIdAndUpdate(
+        user,
+        { $push: { followings: newFriend } },
+        { new: true }
+      )
+        .populate("followings")
+        .then((updatedUser) => {
+          res.redirect("/profile");
+        });
+    }
+  });
+});
+
+//Delete friends from profile
+router.post("/connections/delete/:id", (req, res, next) => {
+  const user = req.session.currentUser._id;
+  const deleteUser = req.params.id;
+  return User.findByIdAndUpdate(
+    user,
+    { $pull: { followings: deleteUser } },
+    { new: true }
+  )
+    .populate("followings")
+    .then((updatedUser) => {
+      res.redirect("/profile");
+    });
+});
+
+
+
   
   // Handles recommendations and game search
   router.get('/recommendations', async (req, res, next) => {

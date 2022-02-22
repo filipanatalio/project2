@@ -16,6 +16,14 @@
     [{{user.gamesWant}}]
       <p></p>
   </div>
+  <p>Friends: </p>
+  {{#each user.followings}}
+  <p>{{username}}</p>
+  <form action="/connections/delete/{{_id}}" method="post">
+    <button type="submit">Delete</button>
+  </form>
+  {{/each}}
+
 {{else}}
  <p>You need to be logged in 2</p>
 {{/if}}

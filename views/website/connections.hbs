@@ -1,3 +1,4 @@
+
 {{#if loggedInUser}}
   <h1>Connections</h1>
 
@@ -5,10 +6,13 @@
 
   {{#each gamesMatch}}
   <p>Name: {{username}} </p>
-  <button id="addFriend" class="addFriend" onclick="addFriend()">Add</button>
+  
+  <form action="/connections/add/{{_id}}" method="post">
+    <button type="submit">Add</button>
+  </form>
+  
   {{/each}}
 
- 
 </div>
 
 
@@ -21,9 +25,3 @@
   <p>You need to be logged in</p>
 
 {{/if}}
-<script type="text/x-handlebars-template" id="myTempId">
-    function addFriend() {
-    alert("lol")
-
-  }
-</script>
