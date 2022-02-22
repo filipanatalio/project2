@@ -11,7 +11,11 @@
   <p>Age: {{user.age}}</p>
   <p>Discord: {{user.discord}}</p>
   <p>Location: {{user.location}}</p>
-  <p>Games that you want to play:</p>
+  <div>
+    <p>Games that you want to play: </p>
+    [{{user.gamesWant}}]
+      <p></p>
+  </div>
 {{else}}
  <p>You need to be logged in 2</p>
 {{/if}}

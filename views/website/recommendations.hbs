@@ -1,6 +1,5 @@
 <h1>Find games to play</h1>
  
-{{#if loggedInUser}}
 
 <h2>Search public and app databases</h2>
 <div class="form-container">
@@ -54,7 +53,7 @@
 </div>
 {{!--     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
  --}}
- <div class="boxes-games">
+<div class="boxes-games">
 {{#if mongoGames}}
 
     {{#each mongoGames}}
@@ -81,36 +80,30 @@
 {{/if}}
 
 {{#if axiosGames}}
+  {{#each axiosGames}}
+    <div class="box-game">
+      <h3>{{name}}</h3>
+      <p>Players: {{min_players}} to {{max_players}}</p>
+      <p>Minimum recommended age: {{min_age}}</p>
+      <p>Average playtime: {{min_playtime}} to {{max_playtime}} minutes</p>
+      {{#if rules_url}}
+        <p><a href="{{rules_url}}">Link to rules summary</a></p>
+      {{/if}}
+      <img class="box-art" src="{{thumb_url}}" alt="Box art">
+      <p><a href="{{url}}">Buy this game</a></p>
+      <p>Unique id: {{id}}</p>
+      <div style="overflow: auto scroll; max-height:20vh;">
+        <p>{{description_preview}}</p>
+      </div>
 
- {{#each axiosGames}}
-<div class="box-game">
-<h3>{{name}}</h3>
-  <p>Players: {{min_players}} to {{max_players}}</p>
-  <p>Minimum recommended age: {{min_age}}</p>
-  <p>Average playtime: {{min_playtime}} to {{max_playtime}} minutes</p>
-{{!--   <p>Complexity: (({{average_learning_complexity}}+{{average_strategy_complexity}})/2) / 5</p> --}}
-  {{#if rules_url}}
-  <p><a href="{{rules_url}}">Link to rules summary</a></p>
-  {{/if}}
-  <img class="box-art" src="{{thumb_url}}" alt="Box art">
-  <p><a href="{{url}}">Buy this game</a></p>
-  <p>Unique id: {{id}}</p>
-  <div style="overflow: auto scroll; max-height:20vh;">
-  <p>{{description_preview}}</p>
-  </div>
-
-
-<form action="/recommendation/add-wanted/{{id}}" method="POST" >
-  <button type="submit">Add game to list</button>
-</form>
-
-  </div>
+      <form action="/recommendation/add-wanted/{{id}}" method="POST" >
+      <button type="submit">Add game to list</button>
+      </form>
+    </div>
   {{/each}}
-  </div>
 {{/if}}
+</div>
 
-{{!-- {{else}}
-
-  <p>You need to be logged in</p>
- --}}
+{{#if errorMessage}}
+   {{errorMessage}}
 {{/if}}

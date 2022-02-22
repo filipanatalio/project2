@@ -4,9 +4,6 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
-// How many rounds should bcrypt run the salt (default [10 - 12 rounds])
-const saltRounds = 10;
-
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
 
@@ -15,15 +12,29 @@ const Game = require("../models/Game.model");
 
 // Require necessary (isLoggedOut and isLoggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
-const isLoggedIn = require("../middleware/isLoggedIn");
+const isLoggedIn = require("../middleware/isLoggedIn")
 
 //axios
 const axios = require("axios");
 
 // Handles profile routing, working partially
 router.get('/profile', (req, res, next) => {
+    const username = req.session.currentUser.username;
+    let gamesWant = [];
+
+    User.findOne({ username }).then((logedUser) => {  
+          if (logedUser) {
+          gamesWant = logedUser.gamesWant;
+        }
+        console.log(gamesWant);
+        console.log(logedUser);
+    })
+
+
+
+
     res.render('website/profile', { user : req.session.currentUser});
-  });
+});
   
   // Handles recommendations
   /* router.get('/recommendations', (req, res, next) => {
@@ -31,7 +42,7 @@ router.get('/profile', (req, res, next) => {
   }); */
   
   // Handles connections
-  router.get('/connections', (req, res, next) => {
+router.get('/connections', (req, res, next) => {
 
     const username = req.session.currentUser.username;
     let gamesWant = []; 
@@ -76,7 +87,7 @@ router.get('/profile', (req, res, next) => {
     })
     })
   
-    });
+});
   
   
   // Handles recommendations and game search
@@ -208,6 +219,7 @@ router.get('/profile', (req, res, next) => {
       res.redirect('/recommendations');
     })
     .catch(err => console.log('Err while creating new game: ', err));
+    //res.render('/recommendations', { errorMessage: 'Incorrect password' });
 
   });
 
