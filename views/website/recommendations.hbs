@@ -1,7 +1,8 @@
-<h1>Search for games</h1>
+<h1>Find games to play</h1>
  
 {{#if loggedInUser}}
 
+<h2>Search public and app databases</h2>
 <div class="form-container">
               <form class="form" method="get" action="/recommendations">
                   <label for="name">Name:</label>
@@ -25,6 +26,28 @@
               </form>
               <form class="form" method="post" action="/recommendations/random">
               <button id="search" class="search-results">Random game!</button>
+              </form>
+</div>
+
+<p></p>
+<h2>Create a new game</h2>
+<div class="form-container">
+              <form class="form" method="post" action="/recommendations/add-game">
+                  <label for="name">Name:</label>
+                  <input id="name" name="name" type="text" class="input" placeholder="required" required/>
+                  <label for="minPlayer">Minimum players:</label>
+                  <input id="minPlayer" name="minPlayer" type="number" class="input" placeholder="required" required/>
+                  <label for="maxPlayer">Maximum players:</label>
+                  <input id="maxPlayer" name="maxPlayer" type="number" class="input" placeholder="required" required/>
+                  <label for="minAge">Minimum age:</label>
+                  <input id="minAge" name="minAge" type="number" class="input" placeholder="required" required/>
+                  <label for="maxPlay">Maximum playtime:</label>
+                  <input id="maxPlay" name="maxPlay" type="number" class="input" placeholder="maximum estimated time of matches"/>
+                  <label for="description">Description:</label>
+                  <input id="description" name="description" type="text" class="input" placeholder="Brief description of the game"/>
+                  <label for="rulesUrl">Link to rules:</label>
+                  <input id="rulesUrl" name="rulesUrl" type="text" class="input" placeholder="link to rules"/>
+                  <button id="search" class="search-results">Create game</button>
               </form>
 </div>
 {{!--     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

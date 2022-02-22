@@ -85,6 +85,7 @@ router.get('/profile', (req, res, next) => {
     if (!req.query.game && !req.query.maxPlayer && !req.query.minPlayer && !req.query.maxPlay && !req.query.minAge) {
       return res.render('website/recommendations');
     }
+    //if user entered information field, the search will include that value
     if (req.query.game) {
       urlToSearch = urlToSearch.concat(`&name=${req.query.game}`)
     }
@@ -143,6 +144,14 @@ router.get('/profile', (req, res, next) => {
   router.post('/recommendation/add-wanted/:id', (req, res, next) => {
     const gameId = req.params.id
     const currentUser = req.session.currentUser
+
+/*     User.findOne({ username }).then((found) => {
+        // If the user is found, send the message username is taken
+        if (found) {
+          return res
+            .status(400)
+            .render("auth.signup", { errorMessage: "Username already taken." });
+        } */
   
   
     User.findByIdAndUpdate(
@@ -168,6 +177,18 @@ router.get('/profile', (req, res, next) => {
     //   console.log("New game: ", newGame);
     // } )
     // .catch(err => console.log('Err while creating new game: ', err));
+  });
+
+  router.post('/recommendations/add-game', (req, res, next) => {
+    const { name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay } = req.body;
+
+    Game.create({ name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay })
+    .then( newGame => {
+        console.log("New game: ", newGame);
+        res.redirect('/recommendations');
+    })
+    .catch(err => console.log('Err while creating new game: ', err));
+
   });
 
 module.exports = router;

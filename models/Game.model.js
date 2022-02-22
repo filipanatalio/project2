@@ -7,32 +7,35 @@ const gameSchema = new Schema(
       type: String,
       unique: true,
       trim: true,
-      // unique: true -> Ideally, should be unique, but its up to you
+      required: true,
     },
     description: {
       type: String,
       trim: true,
     },
-    numberOfPlayers: {
-      type: String,
+    minPlayer: {
+      type: Number,
       trim: true,
+      required: true,
     },
-    mechanics: {
-        type: [String],
-        default: undefined
+    maxPlayer: {
+      type: Number,
+      trim: true,
+      required: true,
     },
-    age: {
-        type: Number,
-        trim: true,
-      },
-    playtime: {
+    rulesUrl: {
         type: String,
-        trim: true,
+        default: undefined,
     },
-    complexity: {
+    minAge: {
         type: Number,
         trim: true,
+        required: true,
       },
+    maxPlay: {
+        type: Number,
+        trim: true,
+    },
     id: {
       type: String,
     },
