@@ -277,4 +277,20 @@ router.post('/recommendations/add-game', (req, res, next) => {
 
 });
 
+  
+  //Delete games that are created by the users
+  
+  router.post("/recommendations/delete/:id", (req, res, next) => {
+    const currentGame = req.params.id;
+    // console.log(currentGame)
+  Game.findByIdAndRemove(currentGame)
+
+    .then(() => {
+      res.redirect('/recommendations');
+    })
+
+
+
+  }); 
+
 module.exports = router;
