@@ -39,10 +39,10 @@ const gameSchema = new Schema(
     thumb_url: {
       type: String,
       trim: true,
-    }
-/*     id: {
+    },
+    apiID: {
       type: String,
-    }, */
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

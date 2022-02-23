@@ -17,33 +17,30 @@ const isLoggedIn = require("../middleware/isLoggedIn")
 //axios
 const axios = require("axios");
 
-// Handles profile routing, working partially
-// router.get('/profile', (req, res, next) => {
-//     const username = req.session.currentUser.username;
-//     let gamesWant = [];
+//handle profile routing, automatically searches favorited games in API and mongo and renders it
+router.get("/profile", async (req, res, next) => {
+  const user = await User.findById(req.session.user._id).populate("followings")
+  //create a string var that will include the id of all games to search
+  let urlToSearch = `https://api.boardgameatlas.com/api/search?ids=${user.gamesWant}&client_id=DDJV2RxbFt`;
 
-//     User.findOne({ username }).then((logedUser) => {  
-//           if (logedUser) {
-//           gamesWant = logedUser.gamesWant;
-//         }
-//         console.log(gamesWant);
-//         console.log(logedUser);
-//     })
-//     res.render('website/profile', { user : req.session.currentUser});
-// });
-router.get("/profile", (req, res, next) => {
-  const user = req.session.currentUser;
-  //console.log(user)
+  //searches using the var and mongo
+  const axiosResponse = await axios.get(urlToSearch)
+  const mongoResponse =  await Game.find();
+
+  //filters the data received
+  const axiosGames = axiosResponse.data.games;
+  const mongoGames = mongoResponse.filter((element) => {
+      return element.id === req.query.id;
+  })
+  console.log(mongoGames)
+
+
   User.findById(user._id)
     .populate("followings")
     .then((theUser) => {
-      res.render("website/profile", { user: theUser });
+      res.render("website/profile", { user: theUser, axiosGames, mongoResponse });
     });
 });
-  // Handles recommendations
-  /* router.get('/recommendations', (req, res, next) => {
-    res.render('website/recommendations');
-  }); */
   
 
 // Handles connections
@@ -154,102 +151,96 @@ router.post("/connections/delete/:id", (req, res, next) => {
 
   
   // Handles recommendations and game search
-  router.get('/recommendations', async (req, res, next) => {
+router.get('/recommendations', async (req, res, next) => {
 
-    let urlToSearch = "https://api.boardgameatlas.com/api/search?";
-    if (!req.query.game && !req.query.maxPlayer && !req.query.minPlayer && !req.query.maxPlay && !req.query.minAge) {
-      return res.render('website/recommendations');
-    }
-    //if user entered information field, the search will include that value
-    if (req.query.game) {
-      urlToSearch = urlToSearch.concat(`&name=${req.query.game}`)
-    }
-    if (req.query.minPlayer) {
-      urlToSearch = urlToSearch.concat(`&min_players=${req.query.minPlayer}`)
-    }
-    if (req.query.maxPlayer) {
-      urlToSearch = urlToSearch.concat(`&max_players=${req.query.maxPlayer}`)
-    }
-    if (req.query.minAge) {
-      urlToSearch = urlToSearch.concat(`&min_age=${req.query.minAge}`)
-    }
-    if (req.query.maxPlay) {
-      urlToSearch = urlToSearch.concat(`&max_playtime=${req.query.maxPlay}`)
-    }
-    urlToSearch = urlToSearch.concat(`&limit=${req.query.searchNumber}&client_id=DDJV2RxbFt`)
+  let urlToSearch = "https://api.boardgameatlas.com/api/search?";
+  if (!req.query.game && !req.query.maxPlayer && !req.query.minPlayer && !req.query.maxPlay && !req.query.minAge) {
+    return res.render('website/recommendations');
+  }
+  //if user entered information field, the search will include that value
+  if (req.query.game) {
+    urlToSearch = urlToSearch.concat(`&name=${req.query.game}`)
+  }
+  if (req.query.minPlayer) {
+    urlToSearch = urlToSearch.concat(`&min_players=${req.query.minPlayer}`)
+  }
+  if (req.query.maxPlayer) {
+    urlToSearch = urlToSearch.concat(`&max_players=${req.query.maxPlayer}`)
+  }
+  if (req.query.minAge) {
+    urlToSearch = urlToSearch.concat(`&min_age=${req.query.minAge}`)
+  }
+  if (req.query.maxPlay) {
+    urlToSearch = urlToSearch.concat(`&max_playtime=${req.query.maxPlay}`)
+  }
+  urlToSearch = urlToSearch.concat(`&limit=${req.query.searchNumber}&client_id=DDJV2RxbFt`)
 
-    const axiosResponse = await axios.get(urlToSearch)
-    const mongoResponse =  await Game.find();
-    
-    const axiosGames = axiosResponse.data.games;
-    const mongoGames = mongoResponse.filter((element) => {
-        return element.name === req.query.game;
-    })
+  const axiosResponse = await axios.get(urlToSearch)
+  const mongoResponse =  await Game.find();
+  
+  const axiosGames = axiosResponse.data.games;
+  const mongoGames = mongoResponse.filter((element) => {
+      return element.name === req.query.game;
+  })
 
-    console.log(mongoGames);
+  console.log(mongoGames);
 
-    res.render("website/recommendations", {axiosGames, mongoGames})
+  res.render("website/recommendations", {axiosGames, mongoGames})
+
+});
+
+//work in progress bellow, ignore it
+router.get('/recommendations/search/:id', async (req, res, next) => {
+
+  let urlToSearch = "https://api.boardgameatlas.com/api/search?";
+  urlToSearch = urlToSearch.concat(`&limit=${req.query.searchNumber}&client_id=DDJV2RxbFt`)
+
+  const axiosResponse = await axios.get(urlToSearch)
+  const mongoResponse =  await Game.find();
+  
+  const axiosGames = axiosResponse.data.games;
+  const mongoGames = mongoResponse.filter((element) => {
+      return element.name === req.query.game;
+  })
+
+  console.log(mongoGames);
+
+  res.render("website/recommendations", {axiosGames, mongoGames})
+
+});
 
 
-    /* axios
-    .get(urlToSearch)
+  
+router.post('/recommendations/random', (req, res, next) => {
+  axios
+    .get(`https://api.boardgameatlas.com/api/search?random=true&client_id=DDJV2RxbFt`)
     .then(response => {
       console.log(response.data.games[0]);
-      const gameDetail = response.data.games;    
-      return res.render('website/recommendations', {gameDetail});
-    }); */
+      const axiosGames = response.data.games;    
+      return res.render('website/recommendations', {axiosGames});
+    });
+});
   
-  
-  /*   else if (req.query.game) {
-      axios
-      .get(`https://api.boardgameatlas.com/api/search?name=${req.query.game}&limit=${req.query.searchNumber}&client_id=DDJV2RxbFt`)
-      .then(response => {
-        console.log(response.data.games[0]);
-        const gameDetail = response.data.games;    
-        return res.render('website/recommendations', {gameDetail});
-  });
-    }
-    else if (req.query.maxPlayer) {
-      axios
-      .get(`https://api.boardgameatlas.com/api/search?min_players=${req.query.minPlayer}&max_players=${req.query.maxPlayer}&limit=${req.query.searchNumber}&client_id=DDJV2RxbFt`)
-      .then(response => {
-        console.log(response.data.games[0]);
-        const gameDetail = response.data.games;    
-        return res.render('website/recommendations', {gameDetail});
-  });
-    } */
-  });
-  
-  router.post('/recommendations/random', (req, res, next) => {
-    axios
-      .get(`https://api.boardgameatlas.com/api/search?random=true&client_id=DDJV2RxbFt`)
-      .then(response => {
-        console.log(response.data.games[0]);
-        const axiosGames = response.data.games;    
-        return res.render('website/recommendations', {axiosGames});
-      });
-  });
-  
-  router.post('/recommendation/add-wanted/:id', (req, res, next) => {
-    const gameId = req.params.id
-    const currentUser = req.session.currentUser
+router.post('/recommendation/add-wanted/:id', (req, res, next) => {
+  const gameId = req.params.id
+  const currentUser = req.session.currentUser
 
-    User.findByIdAndUpdate(
-      currentUser._id,
-      { $push: { gamesWant: gameId } },
-      { new: true }
-    )
-      .then((updatedUser) => {
-        res.redirect('/profile');
-      })
-      .catch((err) =>
-        console.log(
-          'Error while adding game to the favorites list: ',
-          err
-        )
-      );
+  User.findByIdAndUpdate(
+    currentUser._id,
+    { $push: { gamesWant: gameId } },
+    { new: true }
+  )
+    .then((updatedUser) => {
+      res.redirect('/profile');
+    })
+    .catch((err) =>
+      console.log(
+        'Error while adding game to the favorites list: ',
+        err
+      )
+    );
 
-  });
+});
 
   // router.post('/recommendations/add-game', (req, res, next) => {
   //   const { name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay } = req.body;
@@ -264,26 +255,26 @@ router.post("/connections/delete/:id", (req, res, next) => {
 
   // });
 
-  router.post('/recommendations/add-game', (req, res, next) => {
-    const { name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay, thumb_url } = req.body;
-    const currentUser = req.session.currentUser
+router.post('/recommendations/add-game', (req, res, next) => {
+  const { name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay, thumb_url } = req.body;
+  const currentUser = req.session.currentUser
 
-    Game.create({ name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay, thumb_url })
-    .then( newGame => {
-        console.log("New game created: ", newGame);
-        return User.findByIdAndUpdate(
-            currentUser._id,
-            { $push: { gamesWant: newGame._id } },
-            { new: true }
-          )
-    })
-    .then(updatedUser => {
-      console.log(updatedUser)
-      res.redirect('/recommendations');
-    })
-    .catch(err => console.log('Err while creating new game: ', err));
-    //res.render('/recommendations', { errorMessage: 'Incorrect password' });
+  Game.create({ name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay, thumb_url })
+  .then( newGame => {
+      console.log("New game created: ", newGame);
+      return User.findByIdAndUpdate(
+          currentUser._id,
+          { $push: { gamesWant: newGame._id } },
+          { new: true }
+        )
+  })
+  .then(updatedUser => {
+    console.log(updatedUser)
+    res.redirect('/recommendations');
+  })
+  .catch(err => console.log('Err while creating new game: ', err));
+  //res.render('/recommendations', { errorMessage: 'Incorrect password' });
 
-  });
+});
 
 module.exports = router;

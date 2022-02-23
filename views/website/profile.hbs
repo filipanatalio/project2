@@ -8,22 +8,33 @@
 
 {{#if loggedInUser}}
 <h3>Welcome, {{user.username}}! </h3>
-  <p>Age: {{user.age}}</p>
-  <p>Discord: {{user.discord}}</p>
-  <p>Location: {{user.location}}</p>
-  <div>
-    <p>Games that you want to play: </p>
-    [{{user.gamesWant}}]
-      <p></p>
-  </div>
-  <p>Friends: </p>
-  {{#each user.followings}}
+<p>Age: {{user.age}}</p>
+<p>Discord: {{user.discord}}</p>
+<p>Location: {{user.location}}</p>
+
+{{#if axiosGames}}
+<p>Favorite games:</p>
+  {{#each axiosGames}}
+    <p><a href=`/recommendations/search/:id${id}`>{{name}}</a></p>
+  {{/each}}
+{{/if}}
+
+{{#if mongoGames}}
+<p>Favorite games:</p>
+  {{#each mongoGames}}
+    <p>{{name}}</p>
+    <p><a href=`/recommendations/search/:id${id}`>{{name}}</a></p>
+  {{/each}}
+{{/if}}
+
+<p>Friends: </p>
+{{#each user.followings}}
   <p>{{username}}</p>
   <form action="/connections/delete/{{_id}}" method="post">
     <button type="submit">Delete</button>
   </form>
-  {{/each}}
+{{/each}}
 
 {{else}}
- <p>You need to be logged in 2</p>
+  <p>You need to be logged in 2</p>
 {{/if}}
