@@ -56,14 +56,14 @@ router.get("/connections", async (req, res, next) => {
   const username = req.session.currentUser.username;
   let myUserFollowings = [];
   console.log(myUserFollowings);
-  let gamesWant = [];
+  let gamesCreated = [];
   let gamesMatch = [];
   //Finding the data of the logged user
   User.findOne({ username })
     .then((logedUser) => {
       // Search the games that the logged user wants to play
       if (logedUser) {
-        gamesWant = logedUser.gamesWant;
+        gamesCreated = logedUser.gamesCreated;
         myUserFollowings = logedUser.followings;
       }
     })
@@ -81,9 +81,9 @@ router.get("/connections", async (req, res, next) => {
                 !myUserFollowings.includes(toNumber)
               ) {
                 // Matching the logged in user with other users want to play games
-                user.gamesWant.forEach((game) => {
+                user.gamesCreated.forEach((game) => {
                   // Finding matching games
-                  if (gamesWant.indexOf(game) !== -1) {
+                  if (gamesCreated.indexOf(game) !== -1) {
                     if (
                       !gamesMatch.find(
                         (element) => element.username === user.username
