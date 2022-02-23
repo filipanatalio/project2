@@ -20,25 +20,30 @@ const axios = require("axios");
 //handle profile routing, automatically searches favorited games in API and mongo and renders it
 router.get("/profile", async (req, res, next) => {
   try {
-    const user = await User.findById(req.session.user._id).populate("followings gamesWant gamesCreated")
+    const user = await User.findById(req.session.currentUser._id).populate("followings gamesWant gamesCreated")
+
     //create a string var that will include the id of all games to search
     let urlToSearch = `https://api.boardgameatlas.com/api/search?ids=${user.gamesCreated}&client_id=DDJV2RxbFt`;
-  
-    //searches using the var and mongo
+    //searches API using the var
     const axiosResponse = await axios.get(urlToSearch)
-    const mongoResponse =  await Game.find();
-  
     //filters the data received
     const axiosGames = axiosResponse.data.games;
+
+    //searches mongo
+    const mongoResponse =  await Game.find();
+    //filters the data received
     const mongoGames = mongoResponse.filter((element) => {
         return element.id === req.query.id;
     })
-    console.log(mongoGames)
-
+  
+    if (user.gamesCreated.length > 0) {
     res.render("website/profile", { user, axiosGames, mongoResponse });
+    }
+    else {
+    res.render("website/profile", { user, mongoResponse });
+    }
 
   } catch (error) {
-console.log(error)    
   }
 
 /*   user.findByIdAndUpdate(
@@ -201,7 +206,7 @@ router.get('/recommendations', async (req, res, next) => {
 router.get('/recommendations/search/:id', async (req, res, next) => {
 
   let urlToSearch = "https://api.boardgameatlas.com/api/search?";
-  urlToSearch = urlToSearch.concat(`&limit=${req.query.searchNumber}&client_id=DDJV2RxbFt`)
+  urlToSearch = urlToSearch.concat(`ids=${req.query.id}&client_id=DDJV2RxbFt`)
 
   const axiosResponse = await axios.get(urlToSearch)
   const mongoResponse =  await Game.find();
@@ -216,8 +221,6 @@ router.get('/recommendations/search/:id', async (req, res, next) => {
   res.render("website/recommendations", {axiosGames, mongoGames})
 
 });
-
-
   
 router.post('/recommendations/random', (req, res, next) => {
   axios

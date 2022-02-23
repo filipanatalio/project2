@@ -34,6 +34,7 @@ const userSchema = new Schema(
       trim: true,
       lowercase: true,
     },
+    // for API
     gamesCreated: {
       type: [String],
     },
