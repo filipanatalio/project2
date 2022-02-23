@@ -74,6 +74,9 @@
         <form action="/recommendation/add-wanted/{{id}}" method="POST" >
           <button type="submit">Add game to list</button>
         </form>
+         <form action="/recommendations/delete/{{id}}" method="POST" >
+         <button type="submit">Delete game</button>
+         </form> 
       </div>
     
     {{/each}}
@@ -99,6 +102,7 @@
       <form action="/recommendation/add-wanted/{{id}}" method="POST" >
       <button type="submit">Add game to list</button>
       </form>
+      
     </div>
   {{/each}}
 {{/if}}
