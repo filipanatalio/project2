@@ -15,15 +15,14 @@
 {{#if axiosGames}}
 <p>Favorite games:</p>
   {{#each axiosGames}}
-    <p><a href=`/recommendations/search/:id${id}`>{{name}}</a></p>
+    <p><a href=`/recommendations/search/{{id}}`>{{name}}</a></p>
   {{/each}}
 {{/if}}
 
-{{#if mongoGames}}
+{{#if user.gamesWant}}
 <p>Favorite games:</p>
-  {{#each mongoGames}}
-    <p>{{name}}</p>
-    <p><a href=`/recommendations/search/:id${id}`>{{name}}</a></p>
+  {{#each user.gamesWant}}
+    <p><a href=`/recommendations/search/{{id}}`>{{name}}</a></p>
   {{/each}}
 {{/if}}
 

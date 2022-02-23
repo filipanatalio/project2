@@ -19,27 +19,35 @@ const axios = require("axios");
 
 //handle profile routing, automatically searches favorited games in API and mongo and renders it
 router.get("/profile", async (req, res, next) => {
-  const user = await User.findById(req.session.user._id).populate("followings")
-  //create a string var that will include the id of all games to search
-  let urlToSearch = `https://api.boardgameatlas.com/api/search?ids=${user.gamesWant}&client_id=DDJV2RxbFt`;
+  try {
+    const user = await User.findById(req.session.user._id).populate("followings gamesWant gamesCreated")
+    //create a string var that will include the id of all games to search
+    let urlToSearch = `https://api.boardgameatlas.com/api/search?ids=${user.gamesCreated}&client_id=DDJV2RxbFt`;
+  
+    //searches using the var and mongo
+    const axiosResponse = await axios.get(urlToSearch)
+    const mongoResponse =  await Game.find();
+  
+    //filters the data received
+    const axiosGames = axiosResponse.data.games;
+    const mongoGames = mongoResponse.filter((element) => {
+        return element.id === req.query.id;
+    })
+    console.log(mongoGames)
 
-  //searches using the var and mongo
-  const axiosResponse = await axios.get(urlToSearch)
-  const mongoResponse =  await Game.find();
+    res.render("website/profile", { user, axiosGames, mongoResponse });
 
-  //filters the data received
-  const axiosGames = axiosResponse.data.games;
-  const mongoGames = mongoResponse.filter((element) => {
-      return element.id === req.query.id;
-  })
-  console.log(mongoGames)
+  } catch (error) {
+console.log(error)    
+  }
+
+/*   user.findByIdAndUpdate(
+    user._id,
+    { $push: { gamesWant: gameId } },
+    { new: true }
+  ) */
 
 
-  User.findById(user._id)
-    .populate("followings")
-    .then((theUser) => {
-      res.render("website/profile", { user: theUser, axiosGames, mongoResponse });
-    });
 });
   
 
@@ -220,7 +228,30 @@ router.post('/recommendations/random', (req, res, next) => {
       return res.render('website/recommendations', {axiosGames});
     });
 });
-  
+
+router.post('/recommendation/add-api/:id', (req, res, next) => {
+  const gameId = req.params.id
+  const currentUser = req.session.currentUser
+
+  User.findByIdAndUpdate(
+    currentUser._id,
+    { $push: { gamesCreated: gameId } },
+    { new: true }
+  )
+    .then((updatedUser) => {
+      console.log(updatedUser)
+      res.redirect('/profile');
+    })
+    .catch((err) =>
+      console.log(
+        'Error while adding game to the favorites list: ',
+        err
+      )
+    );
+
+});
+
+
 router.post('/recommendation/add-wanted/:id', (req, res, next) => {
   const gameId = req.params.id
   const currentUser = req.session.currentUser
@@ -241,6 +272,7 @@ router.post('/recommendation/add-wanted/:id', (req, res, next) => {
     );
 
 });
+
 
   // router.post('/recommendations/add-game', (req, res, next) => {
   //   const { name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay } = req.body;

@@ -34,12 +34,14 @@ const userSchema = new Schema(
       trim: true,
       lowercase: true,
     },
-    gamesOwned: {
+    gamesCreated: {
       type: [String],
     },
-    gamesWant: {
-      type: [String],
-    },
+    // for mongo
+    gamesWant: [{
+      type: Schema.Types.ObjectId,
+      ref: "Game"
+    }],
     followings: [{
       type: Schema.Types.ObjectId,
       ref: "User",
