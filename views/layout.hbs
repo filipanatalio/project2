@@ -7,13 +7,25 @@
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>{{title}}</title>
       <link rel="stylesheet" href="/stylesheets/style.css" />
+      <link rel="stylesheet" href="/stylesheets/search.css" />
+      <link rel="stylesheet" href="/stylesheets/forms.css" />
+      <link rel="stylesheet" href="/stylesheets/index.css" />
+
+
+
       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 
       
    </head>
 
 {{#if loggedInUser}}
+
+
+
 <nav>
+         <div class="logo">
+         <img src="/images/bgb.png" width="100px">
+      </div>
    <ul class="navLinks">
       <li>
          <a href="/profile">Profile</a>
@@ -30,6 +42,9 @@
          </form>
       </li>
    </ul>
+         <div class="logo">
+         <img src="/images/bgb.png" width="100px">
+      </div>
 </nav>
 {{else}}
 
