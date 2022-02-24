@@ -1,0 +1,68 @@
+.h1class{
+    color: white;
+    text-shadow: 2px 2px #b4b4b4
+}
+
+.divUserInformation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: whitesmoke;
+}
+
+.divFavoriteGames{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.divFavoriteGames p{
+    font-size: 1rem;
+    align-items: center;
+   
+
+}
+.divFavoriteGames a{
+    font-size: 1rem;
+    color: black;
+}
+
+.divFavoriteGames form{
+    margin-left: 2.4rem;
+    color: black;
+}
+
+.favP{
+    color: white;
+    text-shadow: 2px 2px #585555b7; 
+    font-size: 2rem;
+}
+
+.divFollowing h1{
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 2px 2px #585555b7
+}
+
+.divFollowing p{
+    font-size: 1rem; 
+}
+
+.divFollowing form{
+    margin-left: 2.4rem;
+}
+
+.favoriteGamesFriendsDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.deleteBtn{
+    background: #FF7962;
+    color: white;
+    border-color: white;
+    font-size: 1rem;
+    border-radius: 0.4rem;  
+}

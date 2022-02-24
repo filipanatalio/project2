@@ -7,7 +7,11 @@
 }
 
 .divConnetions>p {
+    background-color: white;
     text-align: center;
+    padding: 10px;
+    border-radius: 25px;
+ 
 }
 
 h1, h2 {
@@ -15,4 +19,16 @@ h1, h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    letter-spacing: 7px;
+}
+.username-color {
+    color: #FF7962 ;
+    font-size: 1.5rem; 
+}
+.followFormBtn{
+    background: white;
+    color: #FF7962;
+    border-color: #FF7962;
+    font-size: 1.2rem;
+    border-radius: 0.5rem;  
 }

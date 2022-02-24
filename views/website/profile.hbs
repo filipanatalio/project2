@@ -4,43 +4,53 @@
 <a href="/connections" class="btn btn-dark">Connections</a>
 <form action="/logout" method="POST">
 <button type="submit">Log Out</button> --}}
-<h1>Profile</h1>
+<h1 class="h1class">Profile:</h1>
 
-<h3>Welcome, {{user.username}}! </h3>
-<p>Age: {{user.age}}</p>
-<p>Discord: {{user.discord}}</p>
-<p>Location: {{user.location}}</p>
+<div class="divUserInformation">
+  <h3>Welcome, {{user.username}}! </h3>
+  <p>User Information:</p>
+  <p>-Age: {{user.age}}</p>
+  <p>-Discord: {{user.discord}}</p>
+  <p>-Location: {{user.location}}</p>
+</div>
 
+<div class="favoriteGamesFriendsDiv">
+<div class="divFavoriteGames">
+<p class="favP">Favorite games:</p>
 {{#if user.gamesWant}}
-<p>Favorite games:</p>
+
   {{#each user.gamesWant}}
+  
     <p><a href=`/recommendations/search/{{id}}`>{{name}}</a></p>
     <form action="/profile/delete/mongo/{{_id}}" method="post">
-      <button type="submit">Delete</button>
+      <button class="deleteBtn" type="submit">Delete</button>
     </form>
   {{/each}}
+
 {{/if}}
 
 {{#if axiosGames}}
   {{#each axiosGames}}
     <p><a href=`/recommendations/search/{{id}}`>{{name}}</a></p>
     <form action="/profile/delete/{{id}}" method="post">
-      <button type="submit">Delete</button>
+      <button class="deleteBtn" type="submit">Delete</button>
     </form>
   {{/each}}
 {{/if}}
+</div>
 
+<div class="divFollowing">
 {{#if user.followings}}
-<p>Friends: </p>
+<h1>Following:</h1>
 {{#each user.followings}}
-  <p>Username: {{username}} Discord: {{discord}}</p>
+  <p>Username: {{username}} <br> -Discord: {{discord}}</p>
   <form action="/connections/delete/{{_id}}" method="post">
-    <button type="submit">Delete</button>
+    <button class="deleteBtn" type="submit">Delete</button>
   </form>
 {{/each}}
 {{else}}
-<p>You have no friends yet :(</p>
+{{!-- <p>You have no friends yet</p> --}}
 {{/if}}
-
-
+</div>
+</div>
 

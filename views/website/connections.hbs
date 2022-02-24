@@ -4,10 +4,10 @@
   <h2>(Follow them to have their discord information)</h2>
 
   {{#each gamesMatch}}
-  <p>Username: {{username}} </p>
+  <p><span class="username-color">Username:</span> {{username}} </p>
   
-  <form  class="follow-form-btn" action="/connections/add/{{_id}}" method="post">
-    <button type="submit">Follow</button>
+  <form   action="/connections/add/{{_id}}" method="post">
+    <button class="followFormBtn" type="submit">Follow</button>
   </form>
   
   {{/each}}

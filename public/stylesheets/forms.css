@@ -17,11 +17,8 @@
     height: 1.5rem;
     border-color: white;
     border-radius: 0.5rem;
-
-<<<<<<< HEAD
-=======
 }
->>>>>>> a96ae0dfd8b3027215282b741b331678dc1f2ef7
+
 .login-form {
     display: flex;
     flex-direction: row;
@@ -29,13 +26,6 @@
     align-items: center;
     gap: 1rem;
 }
-<<<<<<< HEAD
-
-=======
-/* .submitBtn{
-    margin-top: 100px;
-} */
->>>>>>> a96ae0dfd8b3027215282b741b331678dc1f2ef7
 /* ///////////SUBMIT BUTTON/////////////// */
 
 .submitBtn{
