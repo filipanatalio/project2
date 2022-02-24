@@ -18,6 +18,14 @@
     border-radius: 0.5rem;
 }
 
+.login-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
 /* ///////////SUBMIT BUTTON/////////////// */
 
 .submitBtn{

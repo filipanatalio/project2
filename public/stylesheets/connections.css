@@ -1,0 +1,18 @@
+.divConnetions{
+    margin-top: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.divConnetions>p {
+    text-align: center;
+}
+
+h1, h2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
