@@ -1,0 +1,110 @@
+h1 {
+    text-align: center;
+}
+
+/* /////////GAME BOXES///////////////////////////// */
+ .search-boxes-out{
+	display: flex;
+    flex-wrap: wrap;
+	justify-content: space-around;
+	/* align-items: flex-start; */
+	/* align-content: space-around; */
+ }
+ 
+ .search-boxes-in-l {
+    border: 5px solid rgb(238, 238, 238);
+    border-radius: 40px 40px 40px 40px;
+    box-sizing: border-box;
+    margin: 50px 1% 0 1%;
+    padding-left: 20px;
+    padding-bottom: 5px;
+    width: 40em;
+    min-height: 35vh;
+}
+
+.search-boxes-in-l>h2 {
+    text-align: center;      
+}
+
+.search-boxes-in-r {
+    border: 5px solid rgb(255, 254, 254);
+    border-radius: 40px 40px 40px 40px;
+    box-sizing: border-box;
+    margin: 50px 1% 0 1%;
+    padding-left: 20px;
+    padding-bottom: 5px;
+    min-width: 40vw;
+    width: 40em;
+
+    min-height: 35vh;
+  }
+
+  .search-boxes-in-r>h2 {
+      text-align: center;      
+  }
+
+ .box-game>img {
+  margin: auto;
+  display: block;
+  max-width:35vw;
+  max-height: 35vh;
+  width: auto;
+  height: auto;
+}
+
+.random-div {
+    display: flex;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+    margin: 50px;
+}
+
+/* .random-btn {
+	box-shadow: 3px 4px 0px 0px #8a2a21;
+	background:linear-gradient(to bottom, #c62d1f 5%, #f24437 100%);
+	background-color:#c62d1f;
+	border-radius:18px;
+	border:1px solid #d02718;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #810e05;
+}
+.random-btn:hover {
+	background:linear-gradient(to bottom, #f24437 5%, #c62d1f 100%);
+	background-color:#f24437;
+}
+.random-btn:active {
+	position:relative;
+	top:1px;
+} */
+
+.random-btn {
+	box-shadow: 3px 4px 2px 0px #276873;
+	background:linear-gradient(to bottom, #359ec4 5%, #408c99 100%);
+	background-color:#359ec4;
+	border-radius:21px;
+	border:1px solid #29668f;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:20px;
+	font-weight:bold;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3d768a;
+}
+.random-btn:hover {
+	background:linear-gradient(to bottom, #408c99 5%, #359ec4 100%);
+	background-color:#408c99;
+}
+.random-btn:active {
+	position:relative;
+	top:1px;
+}

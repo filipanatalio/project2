@@ -1,55 +1,59 @@
 <h1>Find games to play</h1>
  
 
-<h2>Search public and app databases</h2>
-<div class="form-container">
-              <form class="form" method="get" action="/recommendations">
-                  <label for="name">Name:</label>
-                  <input id="name" name="game" type="text" class="input" placeholder="search..."/>
-                  <label for="minPlay">Minimum players:</label>
-                  <input id="minPlay" name="minPlayer" type="number" class="input" placeholder="search..."/>
-                  <label for="maxPlay">Maximum players:</label>
-                  <input id="maxPlay" name="maxPlayer" type="number" class="input" placeholder="search..."/>
-                  <label for="minAge">Minimum age:</label>
-                  <input id="minAge" name="minAge" type="number" class="input" placeholder="search..."/>
-                  <label for="maxPlayTime">Maximum playtime:</label>
-                  <input id="maxPlayTime" name="maxPlay" type="number" class="input" placeholder="search..."/>
-                  <label for="searchNumber">Max results:</label>
-                  <select id="searchNumber" name="searchNumber">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                  </select>
-                  <button id="search" class="search-results">search</button>
-              </form>
-              <form class="form" method="post" action="/recommendations/random">
-              <button id="search" class="search-results">Random game!</button>
-              </form>
+<div class="search-boxes-out">
+  <div class="search-boxes-in-l">
+    <h2>Search public and app databases</h2>
+                <form class="form" method="get" action="/recommendations">
+                    <label for="name">Name:</label>
+                    <input id="name" name="game" type="text" class="input" placeholder="search..."/>
+                    <label for="minPlay">Minimum players:</label>
+                    <input id="minPlay" name="minPlayer" type="number" class="input" placeholder="search..."/>
+                    <label for="maxPlay">Maximum players:</label>
+                    <input id="maxPlay" name="maxPlayer" type="number" class="input" placeholder="search..."/>
+                    <label for="minAge">Minimum age:</label>
+                    <input id="minAge" name="minAge" type="number" class="input" placeholder="search..."/>
+                    <label for="maxPlayTime">Maximum playtime:</label>
+                    <input id="maxPlayTime" name="maxPlay" type="number" class="input" placeholder="search..."/>
+                    <label for="searchNumber">Max results:</label>
+                    <select id="searchNumber" name="searchNumber">
+                      <option value="10">10</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                    <button id="search" class="search-results">search</button>
+                </form>
+  </div>
+
+  <div class="search-boxes-in-r">
+    <h2>Create a new game</h2>
+                <form class="form" method="post" action="/recommendations/add-game">
+                    <label for="name">Name:</label>
+                    <input id="name" name="name" type="text" class="input" placeholder="required" required/>
+                    <label for="minPlayer">Minimum players:</label>
+                    <input id="minPlayer" name="minPlayer" type="number" class="input" placeholder="required" required/>
+                    <label for="maxPlayer">Maximum players:</label>
+                    <input id="maxPlayer" name="maxPlayer" type="number" class="input" placeholder="required" required/>
+                    <label for="minAge">Minimum age:</label>
+                    <input id="minAge" name="minAge" type="number" class="input" placeholder="required" required/>
+                    <label for="maxPlay">Maximum playtime:</label>
+                    <input id="maxPlay" name="maxPlay" type="number" class="input" placeholder="max playtime"/>
+                    <label for="thumb_url">Box art:</label>
+                    <input id="thumb_url" name="thumb_url" type="text" class="input" placeholder="image URL here"/>
+                    <label for="description">Description:</label>
+                    <input id="description" name="description" type="text" class="input" placeholder="Brief description of the game"/>
+                    <label for="rulesUrl">Link to rules:</label>
+                    <input id="rulesUrl" name="rulesUrl" type="text" class="input" placeholder="link to rules"/>
+                    <button id="search" class="search-results">Create game</button>
+                </form>
+  </div>
 </div>
 
-<p></p>
-<h2>Create a new game</h2>
-<div class="form-container">
-              <form class="form" method="post" action="/recommendations/add-game">
-                  <label for="name">Name:</label>
-                  <input id="name" name="name" type="text" class="input" placeholder="required" required/>
-                  <label for="minPlayer">Minimum players:</label>
-                  <input id="minPlayer" name="minPlayer" type="number" class="input" placeholder="required" required/>
-                  <label for="maxPlayer">Maximum players:</label>
-                  <input id="maxPlayer" name="maxPlayer" type="number" class="input" placeholder="required" required/>
-                  <label for="minAge">Minimum age:</label>
-                  <input id="minAge" name="minAge" type="number" class="input" placeholder="required" required/>
-                  <label for="maxPlay">Maximum playtime:</label>
-                  <input id="maxPlay" name="maxPlay" type="number" class="input" placeholder="max playtime"/>
-                  <label for="thumb_url">Box art:</label>
-                  <input id="thumb_url" name="thumb_url" type="text" class="input" placeholder="image URL here"/>
-                  <label for="description">Description:</label>
-                  <input id="description" name="description" type="text" class="input" placeholder="Brief description of the game"/>
-                  <label for="rulesUrl">Link to rules:</label>
-                  <input id="rulesUrl" name="rulesUrl" type="text" class="input" placeholder="link to rules"/>
-                  <button id="search" class="search-results">Create game</button>
-              </form>
+<div class="random-div">
+  <form class="form" method="post" action="/recommendations/random">
+    <button id="search" class="random-btn">Random game!</button>
+  </form>
 </div>
 
 <div class="boxes-games">
