@@ -1,19 +1,16 @@
 
-<head>
-    <link rel="stylesheet" href="/stylesheets/forms.css" />
-</head>
-
-<div class="loginArea">
-   
+<form action="/login" method="POST">
    <label for='email'>Email
-     <input type='email' class="login" name='email'>
+      <input type='email' name='email'>
    </label>
    <label> Password
-     <input type="password" class="login" name="password">
+      <input type="password" name="password">
    </label>
+
+
    <button type="submit">Submit</button>
-    </form>
-</div>
+</form>
+
 
 
 {{#if errorMessage}}
