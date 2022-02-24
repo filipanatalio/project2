@@ -59,17 +59,12 @@ nav{
   box-shadow: 2px 2px 10px 0 #EEE;
   margin: 50px 1% 0 1%;
   padding: 20px;
-  width: 35%;
+  width: 40em;
+  min-height: 35vh;
 }
 
  .box-game>img {
-/*   height: 140px;
-  width: 140px;
-  margin-left: 20px;
-  margin-right: 20px; */
 
-
-  
   margin: auto;
   display: block;
   max-width:35vw;

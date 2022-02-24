@@ -15,12 +15,18 @@
 <p>Favorite games:</p>
   {{#each user.gamesWant}}
     <p><a href=`/recommendations/search/{{id}}`>{{name}}</a></p>
+    <form action="/profile/delete/{{_id}}" method="post">
+      <button type="submit">Delete</button>
+    </form>
   {{/each}}
 {{/if}}
 
 {{#if axiosGames}}
   {{#each axiosGames}}
     <p><a href=`/recommendations/search/{{id}}`>{{name}}</a></p>
+    <form action="/profile/delete/{{_id}}" method="post">
+      <button type="submit">Delete</button>
+    </form>
   {{/each}}
 {{/if}}
 

@@ -46,13 +46,20 @@ router.get("/profile", async (req, res, next) => {
   } catch (error) {
   }
 
-/*   user.findByIdAndUpdate(
-    user._id,
-    { $push: { gamesWant: gameId } },
+});
+
+//Remove games from profile
+router.post("/profile/delete/:id", (req, res, next) => {
+  const user = req.session.currentUser._id;
+  const deleteGame = req.params.id;
+  return User.findByIdAndUpdate(
+    user,
+    { $pull: { gamesCreated: deleteGame } },
     { new: true }
-  ) */
-
-
+  )
+    .then((updatedUser) => {
+      res.redirect("/profile");
+    });
 });
   
 
@@ -160,8 +167,6 @@ router.post("/connections/delete/:id", (req, res, next) => {
     });
 });
 
-
-
   
   // Handles recommendations and game search
 router.get('/recommendations', async (req, res, next) => {
@@ -203,7 +208,7 @@ router.get('/recommendations', async (req, res, next) => {
 });
 
 //work in progress bellow, ignore it
-router.get('/recommendations/search/:id', async (req, res, next) => {
+/* router.get('/recommendations/search/:id', async (req, res, next) => {
 
   let urlToSearch = "https://api.boardgameatlas.com/api/search?";
   urlToSearch = urlToSearch.concat(`ids=${req.query.id}&client_id=DDJV2RxbFt`)
@@ -220,7 +225,7 @@ router.get('/recommendations/search/:id', async (req, res, next) => {
 
   res.render("website/recommendations", {axiosGames, mongoGames})
 
-});
+}); */
   
 router.post('/recommendations/random', (req, res, next) => {
   axios
@@ -254,7 +259,7 @@ router.post('/recommendation/add-api/:id', (req, res, next) => {
 
 });
 
-
+//Add game from Mongo to favorite list
 router.post('/recommendation/add-wanted/:id', (req, res, next) => {
   const gameId = req.params.id
   const currentUser = req.session.currentUser
@@ -276,20 +281,7 @@ router.post('/recommendation/add-wanted/:id', (req, res, next) => {
 
 });
 
-
-  // router.post('/recommendations/add-game', (req, res, next) => {
-  //   const { name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay } = req.body;
-  //   const currentUser = req.session.currentUser
-
-  //   Game.create({ name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay })
-  //   .then( newGame => {
-  //       console.log("New game created: ", newGame);
-  //       res.redirect('/recommendations');
-  //   })
-  //   .catch(err => console.log('Err while creating new game: ', err));
-
-  // });
-
+//Add game from API to favorite list
 router.post('/recommendations/add-game', (req, res, next) => {
   const { name, description, minPlayer, maxPlayer, rulesUrl, minAge, maxPlay, thumb_url } = req.body;
   const currentUser = req.session.currentUser
@@ -301,6 +293,12 @@ router.post('/recommendations/add-game', (req, res, next) => {
           currentUser._id,
           { $push: { gamesWant: newGame._id } },
           { new: true }
+/*           for (let j = 0; j < gamesWant.length - 1; j++) {
+            if (newGame._id === gamesWant[j].id) {
+            console.log(`That game is already on this favorite list. Duplicate removed!`);
+            gamesWant.pop();
+            }
+          } */
         )
   })
   .then(updatedUser => {
