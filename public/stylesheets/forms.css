@@ -1,23 +1,27 @@
 /* //////////////LOG IN FORM//////////// */
+
 .loginArea{
     justify-content: center;
     /* background-color: blue; */
     display: flex;
     justify-content: center;
     margin-top: 10%; 
+
 }
 
 .loginArea form {
     align-items: center;
 }
-
 .login{
     width: 20rem;
     height: 1.5rem;
     border-color: white;
     border-radius: 0.5rem;
-}
 
+<<<<<<< HEAD
+=======
+}
+>>>>>>> a96ae0dfd8b3027215282b741b331678dc1f2ef7
 .login-form {
     display: flex;
     flex-direction: row;
@@ -25,7 +29,13 @@
     align-items: center;
     gap: 1rem;
 }
+<<<<<<< HEAD
 
+=======
+/* .submitBtn{
+    margin-top: 100px;
+} */
+>>>>>>> a96ae0dfd8b3027215282b741b331678dc1f2ef7
 /* ///////////SUBMIT BUTTON/////////////// */
 
 .submitBtn{
@@ -43,15 +53,14 @@
     flex-direction: column;
     justify-content: center;
 }
-
 .signUpList ul{
     margin-left:auto;
     margin-right:auto;
     width: 100px;
     list-style-type: none;
-    margin-top: 1%;     
+    margin-top: 1%;  
+    
 }
-
 .signUpList label{
     margin-left:auto;
     margin-right:auto;
@@ -65,4 +74,6 @@
     background: #FF7962;
     color: white;
     border-color: white;
+
+   
 }
