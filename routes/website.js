@@ -267,15 +267,7 @@ router.post('/recommendation/add-api/:id', (req, res, next) => {
     }
   })
 
-  /* User.findByIdAndUpdate(
-    currentUser._id,
-    { $push: { gamesCreated: gameId } },
-    { new: true }
-  )
-    .then((updatedUser) => {
-      console.log(updatedUser)
-      res.redirect('/profile');
-    }) */
+
     .catch((err) =>
       console.log(
         'Error while adding game to the favorites list: ',
