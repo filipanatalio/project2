@@ -49,6 +49,20 @@ router.get("/profile", async (req, res, next) => {
 });
 
 //Remove games from profile
+router.post("/profile/delete/mongo/:id", (req, res, next) => {
+  const user = req.session.currentUser._id;
+  const deleteGame = req.params.id;
+  return User.findByIdAndUpdate(
+    user,
+    { $pull: { gamesWant: deleteGame } },
+    { new: true }
+  )
+    .then((updatedUser) => {
+      res.redirect("/profile");
+    });
+});
+
+//Remove games from profile
 router.post("/profile/delete/:id", (req, res, next) => {
   const user = req.session.currentUser._id;
   const deleteGame = req.params.id;
@@ -241,7 +255,19 @@ router.post('/recommendation/add-api/:id', (req, res, next) => {
   const gameId = req.params.id
   const currentUser = req.session.currentUser
 
-  User.findByIdAndUpdate(
+  User.findById(currentUser._id)
+  .then(user => {
+    if (user.gamesCreated.includes(gameId)) {
+      res.redirect('/recommendations');
+    }
+    else {
+      user.gamesCreated.push(gameId)
+      user.save()
+      res.redirect('/profile');
+    }
+  })
+
+  /* User.findByIdAndUpdate(
     currentUser._id,
     { $push: { gamesCreated: gameId } },
     { new: true }
@@ -249,7 +275,7 @@ router.post('/recommendation/add-api/:id', (req, res, next) => {
     .then((updatedUser) => {
       console.log(updatedUser)
       res.redirect('/profile');
-    })
+    }) */
     .catch((err) =>
       console.log(
         'Error while adding game to the favorites list: ',
@@ -293,12 +319,6 @@ router.post('/recommendations/add-game', (req, res, next) => {
           currentUser._id,
           { $push: { gamesWant: newGame._id } },
           { new: true }
-/*           for (let j = 0; j < gamesWant.length - 1; j++) {
-            if (newGame._id === gamesWant[j].id) {
-            console.log(`That game is already on this favorite list. Duplicate removed!`);
-            gamesWant.pop();
-            }
-          } */
         )
   })
   .then(updatedUser => {

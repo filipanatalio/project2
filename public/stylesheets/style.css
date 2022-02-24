@@ -61,10 +61,10 @@ nav{
   padding: 20px;
   width: 40em;
   min-height: 35vh;
+  background-image: "./public/images";
 }
 
  .box-game>img {
-
   margin: auto;
   display: block;
   max-width:35vw;

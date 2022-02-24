@@ -49,6 +49,7 @@ h1 {
   max-height: 35vh;
   width: auto;
   height: auto;
+  border-radius: 10px;
 }
 
 .random-div {
