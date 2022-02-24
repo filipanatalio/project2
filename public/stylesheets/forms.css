@@ -1,0 +1,16 @@
+/* //////////////LOG IN FORM//////////// */
+.loginArea{
+    justify-content: center;
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+
+   
+}
+
+.login{
+    width: 25rem;
+    height: 1.5rem;
+}
+/* /////////////SIGN UP FORM////// */
