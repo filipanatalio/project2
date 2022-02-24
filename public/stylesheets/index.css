@@ -1,0 +1,39 @@
+.iDiv1{
+    background-color: #FF7962;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+}
+
+.iDiv2{
+    background-color: #FF7962;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;   
+}
+
+
+.iDescription{
+    margin-left: 10%;
+    margin-right: 10%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}    
+
+.iLogo{
+    width: 50%;
+    height: 100%; 
+}
+
+.iImages{
+  border-radius: 30%;
+    width: 14%;  
+}
+

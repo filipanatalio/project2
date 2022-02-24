@@ -7,24 +7,56 @@
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>{{title}}</title>
       <link rel="stylesheet" href="/stylesheets/style.css" />
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+      
    </head>
 
 {{#if loggedInUser}}
-   <nav class="nav-bar"> 
-  <ul class="nav-bar-ul"> 
+   {{!-- <nav class="nav-bar"> 
+  <ul class="nav-bar-reccopro"> 
    <li><a href="/recommendations">Recommendations</a></li>
    <li><a href="/connections">Connections</a></li>
    <li><a href="/profile">Profile</a></li>  
    <li> <form action="/logout" method="POST"> <button type="submit">Log Out</button></form></li>
   </ul>
+</nav> --}}
+<nav>
+   <ul class="navLinks">
+      <li>
+         <a href="/profile">Profile</a>
+      </li> 
+     <li>
+        <a href="/recommendations">Search</a>
+      </li>
+      <li>
+         <a href="/connections">Connections</a>
+      </li>
+      <li> 
+         <form action="/logout" method="POST">
+         <button class="logout" type="submit">Log Out</button>
+         </form>
+      </li>
+   </ul>
 </nav>
 {{else}}
-   <nav class="nav-bar"> 
-  <ul class="nav-bar-ul"> 
-   <li><a href="/login">Login</a></li>  
-   <li><a href="/signup" class="btn btn-dark">Sign Up</a></li>
-  </ul>
-</nav>
+
+   <nav> 
+      <div class="logo">
+         <img src="/images/bgb.png" width="100px">
+      </div>
+       <ul class="navLinks">   
+          <li>
+             <a href="/login">Login</a>
+         </li>  
+         <li>
+            <a href="/signup">Sign Up</a>
+         </li>
+       </ul>
+       {{!-- <div class="drop">
+          <div class=""></div>
+       </div> --}}
+   </nav>
 {{/if}}
 
    <body>
