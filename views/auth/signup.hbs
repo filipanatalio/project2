@@ -1,28 +1,46 @@
-<form action="/auth/signup" method="POST">
+<div class="signUpList">
+
+<ul >
+   <li>
+      <form action="/auth/signup" method="POST">
    <label> Username
       <input type="text" name="username" placeholder="Username"required>
    </label>
+   </li>
+
    <label> Password
       <input type="password" name="password" placeholder="hunter01" required>
    </label>
-   <label for='email'>Email
+
+   <li>
+      <label for='email'>Email
       <input type='email' name='email' placeholder="Email address" required>
    </label>
-   <label> Age
+   </li>
+
+   <li>
+      <label> Age
       <input type="number" name="age">
    </label>
-   <label> Location
+   </li>
+
+   <li>
+      <label> Location
       <input type="text" name="location">
    </label>
-   <label> Discord
+   </li>
+
+   <li><label> Discord
       <input type="text" name="discord">
-   </label>
+   </label></li>
+   
+</ul>
+ <button  class="submitBtnsignUp" type="submit">Submit</button>
 
 
 
-   <button type="submit">Submit</button>
 </form>
-
+</div>
 {{#if errorMessage}}
    {{errorMessage}}
 {{/if}}

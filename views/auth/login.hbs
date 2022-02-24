@@ -1,20 +1,24 @@
+<div class="loginArea">
 
-<form action="/login" method="POST">
+   
+   <form action="/login" method="POST">
    <label for='email'>Email
-      <input type='email' name='email'>
+      <input type='email' class="login" name='email'>
    </label>
    <label> Password
-      <input type="password" name="password">
+      <input type="password" class="login" name="password">
    </label>
 
 
-   <button type="submit">Submit</button>
-</form>
+   <button class="submitBtn" type="submit">Submit</button>
+   </form>
+</div>
+
+
+
 
 
 
 {{#if errorMessage}}
    {{errorMessage}}
 {{/if}}
-
-
