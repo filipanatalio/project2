@@ -1,14 +1,16 @@
 
 {{#if loggedInUser}}
-  <h1>Connections</h1>
 
-<div class="connetions">
+
+<div class="divConnetions">
+  <h1>Users that want to play the same games as you:</h1>
+  <h2>(Follow them to have their discord information)</h2>
 
   {{#each gamesMatch}}
-  <p>Name: {{username}} </p>
+  <p>Username: {{username}} </p>
   
-  <form action="/connections/add/{{_id}}" method="post">
-    <button type="submit">Add</button>
+  <form  class="follow-form-btn" action="/connections/add/{{_id}}" method="post">
+    <button type="submit">Follow</button>
   </form>
   
   {{/each}}
@@ -19,9 +21,3 @@
 
 {{else}}
 <h1>Connections Page</h1>
-
-
-
-  <p>You need to be logged in</p>
-
-{{/if}}
