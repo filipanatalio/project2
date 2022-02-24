@@ -7,9 +7,7 @@ const {default: axios} = require("axios");
 // Basis API connection, should be moved elsewhere
 router.get("/", async (req, res, next) => {
   try {
-    const request = await axios.get(`https://api.boardgameatlas.com/api/search?name=C&limit=100&client_id=${process.env.CLIENT_ID}`);
-    const games = request.data.games
-    res.render("index", {games});
+    res.render("index");
   } catch (e) {
     console.log("error occurred", e)
   }
